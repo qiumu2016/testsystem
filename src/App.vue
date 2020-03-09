@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-      <router-link to="/device_u">device_u</router-link> |
-      <router-link to="/device_uv">device_uv</router-link>
     <router-view/>
   </div>
 </template>
@@ -14,4 +12,5 @@
   text-align: center;
   color: #2c3e50;
 }
+*{margin:0; padding:0;}
 </style>
