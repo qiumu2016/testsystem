@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is Device_U page</h1>
+    <menu_u></menu_u>
     <el-button @click="test_api()"> test </el-button>
     <el-button @click="test_api_post()"> test_post </el-button>
   </div>
@@ -10,11 +10,11 @@
 <script>
 // @ is an alias to /src
 import t from '../api/test'
-
+import menu_u from '../components/menu_u.vue'
 export default {
   name: 'device_u',
   components:{
-
+    menu_u,
   },
   data() {
       return{
