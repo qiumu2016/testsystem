@@ -1,20 +1,44 @@
 <template>
-  <div class="about">
-    <menu_u></menu_u>
-    <el-button @click="test_api()"> test </el-button>
-    <el-button @click="test_api_post()"> test_post </el-button>
-  </div>
+  <el-container direction = "vertical">
+   <menu_u></menu_u>
+    <el-main>
+      <el-row :gutter="20">
+        <el-col :span="14"><div >
+            <el-card>
+              <body_u></body_u>
+            </el-card>
+          </div>
+        </el-col>
+        <el-col :span="10">
+          <div>
+            <el-card>
+              右侧区域
+            </el-card>            
+          </div>
+        </el-col>
+      </el-row>
+    </el-main>
+  </el-container>
 </template>
-
+<style scoped>
+   .body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+</style>
 
 <script>
 // @ is an alias to /src
 import t from '../api/test'
 import menu_u from '../components/menu_u.vue'
+import body_u from '../components/body_u.vue'
 export default {
   name: 'device_u',
   components:{
     menu_u,
+    body_u
   },
   data() {
       return{
