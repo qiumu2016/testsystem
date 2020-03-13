@@ -216,6 +216,114 @@
                     </el-input>
                 </el-row>
             </el-tab-pane>
+            <el-tab-pane label="通道1C">
+                <el-row style="margin-bottom: 10px">
+                    <el-col :span="6">
+                        <span class="text">长度:</span>
+                        <el-input v-model="C1Form.length" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text">帧数:</span>
+                        <el-input v-model="C1Form.frameCount" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text">误码:</span>
+                        <el-input v-model="C1Form.errorRadio" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text">VOX:</span>
+                        <el-input v-model="C1Form.vox" class="in_put" size="small"></el-input>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-bottom: 10px">
+                    <el-col :span="6">
+                        <span class="text2">帧间隔:</span>
+                        <el-input v-model="C1Form.frameSpace" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text2">波特率:</span>
+                        <el-select v-model="C1Form.baudRate" class="in_put" size="small">
+                            <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text2">采集点:</span>
+                        <el-input v-model="C1Form.MVStart" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text2">采集量:</span>
+                        <el-input v-model="C1Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-bottom: 10px">
+                    <span class="text">明文：</span>
+                    <el-input
+                    type="textarea"
+                    :rows=8
+                    placeholder="请输入16进制数"
+                    v-model="C1Form.confirmData">
+                    </el-input>
+                </el-row>
+            </el-tab-pane>
+            <el-tab-pane label="通道2C">
+                <el-row style="margin-bottom: 10px">
+                    <el-col :span="6">
+                        <span class="text">长度:</span>
+                        <el-input v-model="C2Form.length" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text">帧数:</span>
+                        <el-input v-model="C2Form.frameCount" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text">误码:</span>
+                        <el-input v-model="C2Form.errorRadio" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text">VOX:</span>
+                        <el-input v-model="C2Form.vox" class="in_put" disabled="true" size="small"></el-input>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-bottom: 10px">
+                    <el-col :span="6">
+                        <span class="text2">帧间隔:</span>
+                        <el-input v-model="C2Form.frameSpace" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text2">波特率:</span>
+                        <el-select v-model="C2Form.baudRate" class="in_put" size="small">
+                            <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text2">采集点:</span>
+                        <el-input v-model="C2Form.MVStart" class="in_put" size="small"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <span class="text2">采集量:</span>
+                        <el-input v-model="C2Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-bottom: 10px">
+                    <span class="text">明文：</span>
+                    <el-input
+                    type="textarea"
+                    :rows=8
+                    placeholder="请输入16进制数"
+                    v-model="C2Form.confirmData">
+                    </el-input>
+                </el-row>
+            </el-tab-pane>
             <el-tab-pane label="通用选项">
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
@@ -271,7 +379,7 @@
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="WK日志">
-                <el-row style="margin-bottom: 12px">
+               <el-row style="margin-bottom: 12px">
                     <el-input type="textarea" :rows="13" v-model="wiki.text"></el-input>
                 </el-row>
             </el-tab-pane>
@@ -279,7 +387,7 @@
 </template>
 <script>
 export default {
-    name:'Body_u',
+    name:'Body_uv',
     components:{
 
     },
@@ -298,26 +406,8 @@ export default {
                     value:9600,
                     lable:'9600'
                 },{
-                    value:2000000,
-                    lable:'2000000'
-                },{
-                    value:4000000,
-                    lable:'4000000'
-                },{
-                    value:8000000,
-                    lable:'8000000'
-                },{
-                    value:12000000,
-                    lable:'12000000'
-                },{
-                    value:16000000,
-                    lable:'16000000'
-                },{
-                    value:26000000,
-                    lable:'26000000'
-                },{
-                    value:40000000,
-                    lable:'40000000'
+                    value:1000000,
+                    lable:'1000000'
                 }
             ],
             A1Form:{
@@ -354,6 +444,28 @@ export default {
                 confirmData:null,
             },
             B2Form:{
+                length:null,
+                errorRadio:null,
+                vox:null,
+                frameCount:null,
+                frameCount:null,
+                boudRate:null,
+                MVStart:null,
+                MVcount:null,
+                confirmData:null,
+            },
+            C1Form:{
+                length:null,
+                errorRadio:null,
+                vox:null,
+                frameCount:null,
+                frameCount:null,
+                boudRate:null,
+                MVStart:null,
+                MVcount:null,
+                confirmData:null,
+            },
+            C2Form:{
                 length:null,
                 errorRadio:null,
                 vox:null,

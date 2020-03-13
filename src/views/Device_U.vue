@@ -11,9 +11,7 @@
         </el-col>
         <el-col :span="10">
           <div>
-            <el-card>
-              右侧区域
-            </el-card>            
+              <right_u></right_u>            
           </div>
         </el-col>
       </el-row>
@@ -34,11 +32,13 @@
 import t from '../api/test'
 import menu_u from '../components/menu_u.vue'
 import body_u from '../components/body_u.vue'
+import right_u from '../components/right_u.vue'
 export default {
   name: 'device_u',
   components:{
     menu_u,
-    body_u
+    body_u,
+    right_u,
   },
   data() {
       return{
