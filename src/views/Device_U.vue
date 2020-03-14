@@ -5,7 +5,7 @@
       <el-row :gutter="20">
         <el-col :span="14"><div >
             <el-card>
-              <body_u></body_u>
+              <body_u :m="m"></body_u>
             </el-card>
           </div>
         </el-col>
@@ -14,6 +14,10 @@
               <right_u></right_u>            
           </div>
         </el-col>
+      </el-row>
+      <el-row>
+        下方区域
+        <el-button @click="change()">test</el-button>
       </el-row>
     </el-main>
   </el-container>
@@ -43,9 +47,13 @@ export default {
   data() {
       return{
         url:'',
+        m:true
       }
   },
   methods:{
+    change(){
+      this.m = !this.m;
+    },
     test_api(){
       t.test_get().then(res => {
         console.log(res)

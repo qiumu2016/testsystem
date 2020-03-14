@@ -1,5 +1,5 @@
 <template>
-        <el-tabs type="border-card">
+        <el-tabs type="border-card" @tab-click="handleClick">
             <el-tab-pane label="通道1A">
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
@@ -16,7 +16,7 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
-                        <el-input v-model="A1Form.vox" class="in_put" disabled="true" size="small"></el-input>
+                        <el-input v-model="A1Form.vox" class="in_put" :disabled="true" size="small"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -49,9 +49,37 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
+                    v-if="body_mode"
                     v-model="A1Form.confirmData">
                     </el-input>
+                    <div v-else>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            v-model="A1Form.confirmData">
+                            </el-input>
+                        </el-row>
+                        <span class="text">MI文：</span>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="A1Form.MIwen">
+                            </el-input>
+                        </el-row>
+                        <span class="text">解MI后明文：</span>
+                        <el-row style="margin-bottom: 11px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="A1Form.decode_MIwen">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="通道1B">
@@ -70,7 +98,7 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
-                        <el-input v-model="B1Form.vox" class="in_put" disabled="true" size="small"></el-input>
+                        <el-input v-model="B1Form.vox" class="in_put" :disabled="true" size="small"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -103,9 +131,37 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
+                    v-if="body_mode"
                     v-model="B1Form.confirmData">
                     </el-input>
+                    <div v-else>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            v-model="B1Form.confirmData">
+                            </el-input>
+                        </el-row>
+                        <span class="text">MI文：</span>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="B1Form.MIwen">
+                            </el-input>
+                        </el-row>
+                        <span class="text">解MI后明文：</span>
+                        <el-row style="margin-bottom: 11px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="B1Form.decode_MIwen">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="通道2A">
@@ -124,7 +180,7 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
-                        <el-input v-model="A2Form.vox" class="in_put" disabled="true" size="small"></el-input>
+                        <el-input v-model="A2Form.vox" class="in_put" :disabled="true" size="small"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -157,9 +213,37 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
+                    v-if="body_mode"
                     v-model="A2Form.confirmData">
                     </el-input>
+                    <div v-else>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            v-model="A2Form.confirmData">
+                            </el-input>
+                        </el-row>
+                        <span class="text">MI文：</span>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="A2Form.MIwen">
+                            </el-input>
+                        </el-row>
+                        <span class="text">解MI后明文：</span>
+                        <el-row style="margin-bottom: 11px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="A2Form.decode_MIwen">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="通道2B">
@@ -178,7 +262,7 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
-                        <el-input v-model="B2Form.vox" class="in_put" disabled="true" size="small"></el-input>
+                        <el-input v-model="B2Form.vox" class="in_put" :disabled="true" size="small"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -211,9 +295,37 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
+                    v-if="body_mode"
                     v-model="B2Form.confirmData">
                     </el-input>
+                    <div v-else>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            v-model="B2Form.confirmData">
+                            </el-input>
+                        </el-row>
+                        <span class="text">MI文：</span>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="B2Form.MIwen">
+                            </el-input>
+                        </el-row>
+                        <span class="text">解MI后明文：</span>
+                        <el-row style="margin-bottom: 11px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="B2Form.decode_MIwen">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="通道1C">
@@ -265,9 +377,37 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
+                    v-if="body_mode"
                     v-model="C1Form.confirmData">
                     </el-input>
+                    <div v-else>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            v-model="C1Form.confirmData">
+                            </el-input>
+                        </el-row>
+                        <span class="text">MI文：</span>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="C1Form.MIwen">
+                            </el-input>
+                        </el-row>
+                        <span class="text">解MI后明文：</span>
+                        <el-row style="margin-bottom: 11px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="C1Form.decode_MIwen">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="通道2C">
@@ -286,7 +426,7 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
-                        <el-input v-model="C2Form.vox" class="in_put" disabled="true" size="small"></el-input>
+                        <el-input v-model="C2Form.vox" class="in_put" :disabled="true" size="small"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -319,9 +459,37 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
+                    v-if="body_mode"
                     v-model="C2Form.confirmData">
                     </el-input>
+                    <div v-else>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            v-model="C2Form.confirmData">
+                            </el-input>
+                        </el-row>
+                        <span class="text">MI文：</span>
+                        <el-row style="margin-bottom: 12px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="C2Form.MIwen">
+                            </el-input>
+                        </el-row>
+                        <span class="text">解MI后明文：</span>
+                        <el-row style="margin-bottom: 11px">
+                            <el-input
+                            type="textarea"
+                            :rows=1
+                            :disabled="true"
+                            v-model="C2Form.decode_MIwen">
+                            </el-input>
+                        </el-row>
+                    </div>
+                    
                 </el-row>
             </el-tab-pane>
             <el-tab-pane label="通用选项">
@@ -340,7 +508,7 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
-                        <el-input v-model="allForm.vox" class="in_put" disabled="true" size="small"></el-input>
+                        <el-input v-model="allForm.vox" class="in_put" :disabled="true" size="small"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -388,6 +556,12 @@
 <script>
 export default {
     name:'Body_uv',
+    props: {
+        m:{
+            type:Boolean,
+            required:true
+        }
+    },
     components:{
 
     },
@@ -420,6 +594,8 @@ export default {
                 MVStart:null,
                 MVcount:null,
                 confirmData:null,
+                MIwen:'',
+                decode_MIwen:''
             },
             B1Form:{
                 length:null,
@@ -431,6 +607,8 @@ export default {
                 MVStart:null,
                 MVcount:null,
                 confirmData:null,
+                MIwen:'',
+                decode_MIwen:''
             },
             A2Form:{
                 length:null,
@@ -442,6 +620,8 @@ export default {
                 MVStart:null,
                 MVcount:null,
                 confirmData:null,
+                MIwen:'',
+                decode_MIwen:''
             },
             B2Form:{
                 length:null,
@@ -453,6 +633,8 @@ export default {
                 MVStart:null,
                 MVcount:null,
                 confirmData:null,
+                MIwen:'',
+                decode_MIwen:''
             },
             C1Form:{
                 length:null,
@@ -464,6 +646,8 @@ export default {
                 MVStart:null,
                 MVcount:null,
                 confirmData:null,
+                MIwen:'',
+                decode_MIwen:''
             },
             C2Form:{
                 length:null,
@@ -475,6 +659,8 @@ export default {
                 MVStart:null,
                 MVcount:null,
                 confirmData:null,
+                MIwen:'',
+                decode_MIwen:''
             },
             allForm:{
                 length:null,
@@ -490,11 +676,29 @@ export default {
             wiki:{
                 text:'',
             },
+            body_mode:true,
         }
     },
     methods:{
-
-    }
+        modeChange(a){
+            this.body_mode = a;
+        },
+        handleClick(tab, event){
+            let index = tab.index
+            if(index<=3){
+                this.$emit('changeTab',1);
+            }else if(index>=6){
+                this.$emit('changeTab',3);
+            }else{
+                this.$emit('changeTab',2);
+            }
+        }
+    },
+    watch:{ //监听value的变化，进行相应的操作即可
+        m: function(a,b){     //a是value的新值，b是旧值
+            this.modeChange(a);
+    },
+  }
 }
 </script>
 <style scoped>

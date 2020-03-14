@@ -9,7 +9,7 @@
          <el-row style="margin-bottom: 6px">
              <span class = "text">设备2监控命令/响应:</span>
          </el-row>
-         <el-row style="margin-bottom: 0px">
+         <el-row style="margin-bottom: 2px">
             <el-input type="textarea" :rows="7" v-model="device_2"></el-input>
          </el-row>
     </el-card>
