@@ -569,19 +569,19 @@ export default {
         return{
             options:[{
                     value:600,
-                    lable:'600'
+                    label:'600'
                 },{
                     value:1200,
-                    lable:'1200'
+                    label:'1200'
                 },{
                     value:2400,
-                    lable:'2400'
+                    label:'2400'
                 },{
                     value:9600,
-                    lable:'9600'
+                    label:'9600'
                 },{
                     value:1000000,
-                    lable:'1000000'
+                    label:'1000000'
                 }
             ],
             A1Form:{

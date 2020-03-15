@@ -16,8 +16,8 @@
         </el-col>
       </el-row>
       <el-row>
-        下方区域
-        <el-button @click="change()">test</el-button>
+        <lower_u  @changeMode="changeMode"> </lower_u>
+        <!-- <el-button @click="change()">test</el-button> -->
       </el-row>
     </el-main>
   </el-container>
@@ -37,22 +37,35 @@ import t from '../api/test'
 import menu_u from '../components/menu_u.vue'
 import body_u from '../components/body_u.vue'
 import right_u from '../components/right_u.vue'
+import lower_u from '../components/lower_u.vue'
 export default {
   name: 'device_u',
   components:{
     menu_u,
     body_u,
     right_u,
+    lower_u,
   },
   data() {
       return{
         url:'',
-        m:true
+        m:1
       }
   },
   methods:{
-    change(){
-      this.m = !this.m;
+    changeMode(para){
+      switch(para){
+        case 1:case 2:case 9:case 10:case 11:case 12:case 13:
+          this.m = 1;
+          break;
+        case 4:case 5:case 6:case 7:case 17:
+          this.m = 2;
+          break;
+        case 8:
+          this.m = 3;
+          break;
+      }
+
     },
     test_api(){
       t.test_get().then(res => {

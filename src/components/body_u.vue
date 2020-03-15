@@ -57,6 +57,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing" 
                             v-model="A1Form.confirmData">
                             </el-input>
                         </el-row>
@@ -65,7 +66,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="A1Form.MIwen">
                             </el-input>
                         </el-row>
@@ -138,6 +139,7 @@
                         <el-row style="margin-bottom: 12px">
                             <el-input
                             type="textarea"
+                            :disabled="disableMing" 
                             :rows=1
                             v-model="B1Form.confirmData">
                             </el-input>
@@ -147,7 +149,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="B1Form.MIwen">
                             </el-input>
                         </el-row>
@@ -220,6 +222,7 @@
                         <el-row style="margin-bottom: 12px">
                             <el-input
                             type="textarea"
+                            :disabled="disableMing" 
                             :rows=1
                             v-model="A2Form.confirmData">
                             </el-input>
@@ -229,7 +232,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="A2Form.MIwen">
                             </el-input>
                         </el-row>
@@ -302,7 +305,8 @@
                         <el-row style="margin-bottom: 12px">
                             <el-input
                             type="textarea"
-                            :rows=1
+                            :disabled="disableMing" 
+                            :rows=1 
                             v-model="B2Form.confirmData">
                             </el-input>
                         </el-row>
@@ -311,7 +315,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="B2Form.MIwen">
                             </el-input>
                         </el-row>
@@ -394,7 +398,7 @@ export default {
     name:'Body_u',
     props: {
         m:{
-            type:Boolean,
+            type:Number,
             required:true
         }
     },
@@ -405,37 +409,37 @@ export default {
         return{
             options:[{
                     value:600,
-                    lable:'600'
+                    label:'600'
                 },{
                     value:1200,
-                    lable:'1200'
+                    label:'1200'
                 },{
                     value:2400,
-                    lable:'2400'
+                    label:'2400'
                 },{
                     value:9600,
-                    lable:'9600'
+                    label:'9600'
                 },{
                     value:2000000,
-                    lable:'2000000'
+                    label:'2000000'
                 },{
                     value:4000000,
-                    lable:'4000000'
+                    label:'4000000'
                 },{
                     value:8000000,
-                    lable:'8000000'
+                    label:'8000000'
                 },{
                     value:12000000,
-                    lable:'12000000'
+                    label:'12000000'
                 },{
                     value:16000000,
-                    lable:'16000000'
+                    label:'16000000'
                 },{
                     value:26000000,
-                    lable:'26000000'
+                    label:'26000000'
                 },{
                     value:40000000,
-                    lable:'40000000'
+                    label:'40000000'
                 }
             ],
             A1Form:{
@@ -505,11 +509,26 @@ export default {
                 text:'',
             },
             body_mode:true,
+            disableMIwen:true,
+            disableJieMI:true,
+            disableMing:false,
         }
     },
     methods:{
         modeChange(a){
-            this.body_mode = a;
+           if(a == 1){
+               this.body_mode = true;
+           }else if(a == 2){
+               this.body_mode = false;
+               this.disableMing = false;
+               this.disableMIwen = true;
+               this.disableJieMI = true;
+           }else if(a == 3){
+               this.body_mode = false;
+               this.disableMing = true;
+               this.disableMIwen = false;
+               this.disableJieMI = true;
+           }
         }
     },
     watch:{ //监听value的变化，进行相应的操作即可
