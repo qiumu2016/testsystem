@@ -57,6 +57,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing"
                             v-model="A1Form.confirmData">
                             </el-input>
                         </el-row>
@@ -65,7 +66,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="A1Form.MIwen">
                             </el-input>
                         </el-row>
@@ -139,6 +140,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing" 
                             v-model="B1Form.confirmData">
                             </el-input>
                         </el-row>
@@ -147,7 +149,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="B1Form.MIwen">
                             </el-input>
                         </el-row>
@@ -221,6 +223,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing"
                             v-model="A2Form.confirmData">
                             </el-input>
                         </el-row>
@@ -229,7 +232,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="A2Form.MIwen">
                             </el-input>
                         </el-row>
@@ -303,6 +306,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing"
                             v-model="B2Form.confirmData">
                             </el-input>
                         </el-row>
@@ -311,7 +315,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="B2Form.MIwen">
                             </el-input>
                         </el-row>
@@ -385,6 +389,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing" 
                             v-model="C1Form.confirmData">
                             </el-input>
                         </el-row>
@@ -393,7 +398,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="C1Form.MIwen">
                             </el-input>
                         </el-row>
@@ -467,6 +472,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
+                            :disabled="disableMing" 
                             v-model="C2Form.confirmData">
                             </el-input>
                         </el-row>
@@ -475,7 +481,7 @@
                             <el-input
                             type="textarea"
                             :rows=1
-                            :disabled="true"
+                            :disabled="disableMIwen"
                             v-model="C2Form.MIwen">
                             </el-input>
                         </el-row>
@@ -557,8 +563,12 @@
 export default {
     name:'Body_uv',
     props: {
-        m:{
-            type:Boolean,
+        m_ab:{
+            type:Number,
+            required:true
+        },
+        m_c:{
+            type:Number,
             required:true
         }
     },
@@ -677,28 +687,50 @@ export default {
                 text:'',
             },
             body_mode:true,
+            disableMIwen:true,
+            disableJieMI:true,
+            disableMing:false,
         }
     },
     methods:{
-        modeChange(a){
-            this.body_mode = a;
+        m_abChange(a){
+            if(a == 1){
+               this.body_mode = true;
+           }else if(a == 2){
+               this.body_mode = false;
+               this.disableMing = false;
+               this.disableMIwen = true;
+               this.disableJieMI = true;
+           }else if(a == 3){
+               this.body_mode = false;
+               this.disableMing = true;
+               this.disableMIwen = false;
+               this.disableJieMI = true;
+           }
+        },
+        m_cChange(a){
+            if(a == 1){
+               this.body_mode = true;
+           }else if(a == 2){
+               this.body_mode = false;
+               this.disableMing = false;
+               this.disableMIwen = true;
+               this.disableJieMI = true;
+           }
         },
         handleClick(tab, event){
-            let index = tab.index
-            if(index<=3){
-                this.$emit('changeTab',1);
-            }else if(index>=6){
-                this.$emit('changeTab',3);
-            }else{
-                this.$emit('changeTab',2);
-            }
+            let index = Number(tab.index) + 1;
+            this.$emit('changeTab',index);
         }
     },
     watch:{ //监听value的变化，进行相应的操作即可
-        m: function(a,b){     //a是value的新值，b是旧值
-            this.modeChange(a);
+        m_ab: function(a,b){     //a是value的新值，b是旧值
+            this.m_abChange(a);
+        },
+        m_c: function(a,b){
+            this.m_cChange(a);
+        },
     },
-  }
 }
 </script>
 <style scoped>

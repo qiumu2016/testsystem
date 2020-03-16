@@ -2,7 +2,7 @@
     <el-card style="margin-top:15px" body-style = "padding: 10px 15px 15px 15px">
         <el-row class = 'start-box'>
                 <el-button @click="OnBtnStart" size="small"    :disabled="startStatus" style="padding-left:10px;float:left;" >启动</el-button>
-                <el-select v-model="startMode" size="small" placeholder="请选择" style="padding-left:10px;float:left;" @change="startMenuChange">
+                <el-select v-model="startMode" size="small" placeholder="请选择" style="padding-left:10px;float:left;" @change="startModeChange">
                     <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -10,11 +10,13 @@
                     :value="item.value">
                     </el-option>
                 </el-select>
-                <span class="text">保存</span>
-                <el-input size="small" placeholder="输入文件路径" v-model="filePath" class="input-box"></el-input>
-                <el-button size="small" @click="SaveFile" style="margin-left:10px;float:left;">...</el-button>
-                <span class="text">IP</span>
-                <el-input class="input-box" size="small" @change="IPChange" v-model="ip"></el-input>
+                <div class = "save">
+                    <span class="text">保存</span>
+                    <el-input size="small" placeholder="输入文件路径" v-model="filePath" class="input-box" :disabled="disableSave"></el-input>
+                    <el-button size="small" @click="SaveFile" style="margin-left:10px;float:left;">...</el-button>
+                    <span class="text">IP</span>
+                    <el-input class="input-box" size="small" @change="IPChange" v-model="ip"></el-input>
+                </div>
         </el-row>
         <el-row>
             <el-input type="textarea" :rows="6" :disabled="true" v-model="low_text"></el-input>
@@ -35,6 +37,7 @@ export default {
           filePath:'',
           low_text:'',
           ip:'255.255.255.255',
+          disableSave:true,
           options:[
             {value:1,label:'多路自环'},
             {value:2,label:'多路双向设备间交叉'},
@@ -42,7 +45,7 @@ export default {
             {value:4,label:'单路自环（MW解析）'},
             {value:5,label:'单路单向设备间交叉（MW解析）'},
             {value:6,label:'MW采集'},
-            {value:7,label:'MWW采集（超长帧）'},
+            {value:7,label:'MW采集（超长帧）'},
             {value:8,label:'收端一致性测试'},
             {value:9,label:'噪声码采集'},
             {value:10,label:'生产测试'},
@@ -63,7 +66,12 @@ export default {
         OnBtnStart(){
             this.startStatus = !this.startStatus
         },
-        startMenuChange(value){
+        startModeChange(value){
+            if(value<=5||value>=10){
+                this.disableSave = true
+            }else{
+                this.disableSave = false
+            }
             this.$emit('changeMode',value);
         },
     }
@@ -83,6 +91,10 @@ export default {
     padding-left:10px;
     float:left;
     padding-top: 5px;
+}
+.save{
+    position: absolute;
+    left: 46%;
 }
 
 </style>
