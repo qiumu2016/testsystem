@@ -19,9 +19,11 @@
       </el-row>
       <el-row>
         <lower_uv  @changeMode="changeMode" :tab="tab"> </lower_uv>
-        <!-- <el-button @click="change()">test</el-button> -->
       </el-row>
     </el-main>
+    <el-footer>
+      <myfooter :r="r_message" :l="l_message"></myfooter>
+    </el-footer>
   </el-container>
 </template>
 <style scoped>
@@ -40,13 +42,15 @@ import menu_uv from '../components/menu_uv.vue'
 import body_uv from '../components/body_uv.vue'
 import right_uv from '../components/right_uv.vue'
 import lower_uv from '../components/lower_uv.vue'
+import myfooter from '../components/myFooter.vue'
 export default {
   name: 'device_uv',
   components:{
     menu_uv,
     body_uv,
     right_uv,
-    lower_uv
+    lower_uv,
+    myfooter,
   },
   data() {
       return{
@@ -54,6 +58,8 @@ export default {
         m_ab:1,
         m_c:1,
         tab:1,
+        r_message:"连接失败",
+        l_message:"就绪",
       }
   },
   methods:{

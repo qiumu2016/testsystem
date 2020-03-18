@@ -17,6 +17,17 @@
                     <span class="text">IP</span>
                     <el-input class="input-box" size="small" @change="IPChange" v-model="ip"></el-input>
                 </div>
+                <span class = "signal">
+                    <div class="M-start-fleg">M</div>
+                    <div class="k-start-fleg">k</div>
+                    <span class="null-num-fleg">
+                        <div class="null-1-fleg"  v-if="true">1</div>
+                        <div class="null-1-fleg"  v-else>①</div>
+                        <div class="null-2-fleg"  v-if="true">2</div>
+                        <div class="null-2-fleg"  v-else>②</div>
+                    </span>
+                    <div class="wk-fleg">x</div>
+                </span>
         </el-row>
         <el-row>
             <el-input type="textarea" :rows="6" :disabled="true" v-model="low_text"></el-input>
@@ -78,6 +89,58 @@ export default {
 }
 </script>
 <style scoped>
+.M-start-fleg {
+  width: 45px;
+  text-align: center;
+  padding: 9px 0;
+  margin-right: 5px;
+  background-color: #67c23a;
+  display: inline-block;
+}
+.k-start-fleg {
+  width: 40px;
+  height: 20px;
+  text-align: center;
+  padding: 5px 0;
+  margin-right: 5px;
+  background-color: #67c23a;
+  display: inline-block;
+}
+.null-num-fleg {
+  position: relative;
+  top: 6px;
+  width: 1em;
+  display: inline-block;
+  height: 30px;
+  background-color: #67c23a;
+}
+.null-1-fleg {
+  width: 100%;
+  height: 14px;
+  background-color: #67c23a;
+  font-size: 10px;
+  border-bottom: 1px solid #ffffff;
+}
+.null-2-fleg {
+  width: 100%;
+  height: 14px;
+  background-color: #67c23a;
+  font-size: 10px;
+}
+.wk-fleg {
+  width: 40px;
+  height: 20px;
+  text-align: center;
+  position: relative;
+  padding: 5px 0;
+  background-color: #67c23a;
+  display: inline-block;
+  margin-left: 40px;
+}
+.signal{
+    position: absolute;
+    left: 76%;
+}
 .start-box{
     margin-bottom: 10px
 }

@@ -17,9 +17,11 @@
       </el-row>
       <el-row>
         <lower_u  @changeMode="changeMode"> </lower_u>
-        <!-- <el-button @click="change()">test</el-button> -->
       </el-row>
     </el-main>
+    <el-footer>
+      <myfooter :r="r_message" :l="l_message"></myfooter>
+    </el-footer>
   </el-container>
 </template>
 <style scoped>
@@ -38,6 +40,7 @@ import menu_u from '../components/menu_u.vue'
 import body_u from '../components/body_u.vue'
 import right_u from '../components/right_u.vue'
 import lower_u from '../components/lower_u.vue'
+import myfooter from '../components/myFooter.vue'
 export default {
   name: 'device_u',
   components:{
@@ -45,11 +48,14 @@ export default {
     body_u,
     right_u,
     lower_u,
+    myfooter,
   },
   data() {
       return{
         url:'',
-        m:1
+        m:1,
+        r_message:"连接失败",
+        l_message:"就绪",
       }
   },
   methods:{

@@ -381,7 +381,6 @@
                     <el-input
                     type="textarea"
                     :rows=8
-                    placeholder="请输入16进制数"
                     v-model="allForm.confirmData">
                     </el-input>
                 </el-row>
