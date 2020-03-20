@@ -52,6 +52,7 @@ export default {
   width: 50%;
   border-right: 1px solid #ffffff;
   margin-right: 20px;
+  height: 20px;
 }
 
 </style>

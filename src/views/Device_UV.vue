@@ -21,7 +21,7 @@
         <lower_uv  @changeMode="changeMode" :tab="tab"> </lower_uv>
       </el-row>
     </el-main>
-    <el-footer>
+    <el-footer height = "40px">
       <myfooter :r="r_message" :l="l_message"></myfooter>
     </el-footer>
   </el-container>

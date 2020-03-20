@@ -8,20 +8,20 @@
             <el-menu-item index="2">监控参数</el-menu-item>
             <el-submenu index="3">
                 <template slot="title">监控命令</template>
-                <el-menu-item v-for="(value, index) in menu.monitorCommand" :key="index" :index="2 + '_' + index">{{value}}</el-menu-item>
+                <el-menu-item v-for="(value, index) in menu.monitorCommand" :key="index" :index="3 + '_' + index">{{value}}</el-menu-item>
             </el-submenu>
             <el-submenu index="4">
                 <template slot="title">wk</template>
-                <el-menu-item v-for="(value, index) in menu.wk" :key="index" :index="3 + '_' + index">{{value}}</el-menu-item>
+                <el-menu-item v-for="(value, index) in menu.wk" :key="index" :index="4 + '_' + index">{{value}}</el-menu-item>
             </el-submenu>
             <el-menu-item index="5">测评参数</el-menu-item>
             <el-submenu index="6">
                 <template slot="title">测评命令</template>
-                <el-menu-item v-for="(value, index) in menu.testCommand" :key="index" :index="5 + '_' + index">{{value}}</el-menu-item>
+                <el-menu-item v-for="(value, index) in menu.testCommand" :key="index" :index="6 + '_' + index">{{value}}</el-menu-item>
             </el-submenu>
             <el-submenu index="7">
                 <template slot="title">帮助</template>
-                <el-menu-item v-for="(value, index) in menu.help" :key="index" :index="6 + '_' + index">{{value}}</el-menu-item>
+                <el-menu-item v-for="(value, index) in menu.help" :key="index" :index="7 + '_' + index">{{value}}</el-menu-item>
             </el-submenu>
         </el-menu>
         <el-dialog class="monitorDialog"
@@ -204,6 +204,25 @@
                 <el-button type="primary" @click="testDialogCancel()">确 定</el-button>
             </span>
         </el-dialog>
+         <el-dialog class ="channelDialog" title="设置信道号"
+            :visible="channelDialogVisible"
+            width="35%"
+            center >
+            <el-row style="margin-bottom: 2px">
+                <span class="text5">设备1信道号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <el-input v-model="device_1_channel" class="in_put_1" size="small">
+                </el-input>
+            </el-row>
+            <el-row style="margin-bottom: 2px">
+                <span class="text5">设备2信道号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <el-input v-model="device_2_channel" class="in_put_1" size="small">
+                </el-input>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="channelDialogCancel()">取 消</el-button>
+                <el-button type="primary" @click="channelDialogSubmit()">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -215,11 +234,14 @@ export default {
     },
     data(){
         return{
+            channelDialogVisible:false,
             monitorDialogVisible:false,
             testDialogVisible:false,
             monitorParaVisible:false,
             testParaVisible:false,
             uploadVisible:false,
+            device_1_channel:666,
+            device_2_channel:888,
             testDevice_1:{
                 IKMode:'',
                 IKPara:'',
@@ -325,6 +347,14 @@ export default {
         }
     },
     methods:{
+        channelDialogCancel(){
+            console.log(this.device_1_channel)
+            this.channelDialogVisible = false
+        },
+        channelDialogSubmit(){
+            console.log(this.device_2_channel)
+            this.channelDialogVisible = false
+        },
         monitorDialogCancel(){
             console.log(this.monitorDevice_1)
             this.monitorDialogVisible = false
@@ -357,6 +387,9 @@ export default {
                     break
                 case '2':
                     this.monitorDialogVisible = true;
+                    break
+                case '4_0':
+                    this.channelDialogVisible = true;
                     break
                 case '5':
                     this.testDialogVisible = true;

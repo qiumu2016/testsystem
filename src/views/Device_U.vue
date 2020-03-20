@@ -19,7 +19,7 @@
         <lower_u  @changeMode="changeMode"> </lower_u>
       </el-row>
     </el-main>
-    <el-footer>
+    <el-footer height = "40px">
       <myfooter :r="r_message" :l="l_message"></myfooter>
     </el-footer>
   </el-container>
