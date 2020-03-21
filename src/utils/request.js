@@ -4,12 +4,13 @@ import axios from 'axios'
 // 使用element-ui Message做消息提醒
 import { Message, MessageBox} from 'element-ui';
 //1. 创建新的axios实例，
+var url = sessionStorage.getItem("url");
 const service = axios.create({
   // 公共接口--这里注意后面会讲
-  baseURL: "http://192.168.1.1:5000",
+  baseURL : url,
   //baseURL:'/api',
   // 超时时间 单位是ms，这里设置了3s的超时时间
-  timeout: 3 * 1000
+  timeout: 3000,
 })
 service.defaults.withCredentials = true;
 // 2.请求拦截器

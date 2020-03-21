@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">  
-  <img src="../assets/back.jpg" height="100%" width="100%"/>  
-  </div>
+    <el-card class = "title">
+      <span class="title-text">U/UV设备测试系统</span>
+    </el-card>
     <el-card class="box-card"  shadow="always">
       <div class = "text">请选择设备类型:</div>
       <div class = "btn-style">
@@ -23,17 +23,32 @@ export default {
   },
   methods:{
     to_device_u(){
+      sessionStorage.setItem("url",'http://101.11.1.1')
       this.$router.push('/device_u');
     },
     to_device_uv(){
+      sessionStorage.setItem("url",'http://101.11.1.1')
       this.$router.push('/device_uv');
     }
   }
 }
 </script>
 <style scoped>
+.title-text{
+  font-size: 60px;
+  letter-spacing:15px
+}
+.home{
+  text-align:center;
+}
 .text{
   font-size:26px
+}
+.title{
+  width: 80%;
+  display:inline-block;
+  position: relative;
+  margin-top:3%
 }
 .box-card{
   width: 480px;
