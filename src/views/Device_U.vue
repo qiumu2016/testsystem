@@ -36,10 +36,10 @@
 <script>
 // @ is an alias to /src
 import t from '../api/test'
-import menu_u from '../components/menu_u.vue'
-import body_u from '../components/body_u.vue'
-import right_u from '../components/right_u.vue'
-import lower_u from '../components/lower_u.vue'
+import menu_u from '../components/toolbar_u.vue'
+import body_u from '../components/parameter_u.vue'
+import right_u from '../components/response_u.vue'
+import lower_u from '../components/operation_u.vue'
 import myfooter from '../components/myFooter.vue'
 export default {
   name: 'device_u',

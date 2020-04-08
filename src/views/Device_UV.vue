@@ -39,10 +39,10 @@
 <script>
 // @ is an alias tvo /src
 import t from '../api/test'
-import menu_uv from '../components/menu_uv.vue'
-import body_uv from '../components/body_uv.vue'
-import right_uv from '../components/right_uv.vue'
-import lower_uv from '../components/lower_uv.vue'
+import menu_uv from '../components/toolbar_uv.vue'
+import body_uv from '../components/parameter_uv.vue'
+import right_uv from '../components/response_uv.vue'
+import lower_uv from '../components/operation_uv.vue'
 import myfooter from '../components/myFooter.vue'
 export default {
   name: 'device_uv',
