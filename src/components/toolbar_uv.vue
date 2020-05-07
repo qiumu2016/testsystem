@@ -30,7 +30,7 @@
         </el-menu>
         <el-dialog class="monitorDialog"
             title="监控命令的参数设置"
-            :visible="monitorDialogVisible"
+            :visible.sync="monitorDialogVisible"
             width="55%"
             center >
             <el-col :span="12">
@@ -300,7 +300,7 @@
             </span>
         </el-dialog>
         <el-dialog class ="channelDialog" title="设置信道号"
-            :visible="channelDialogVisible"
+            :visible.sync="channelDialogVisible"
             width="35%"
             center >
             <el-row style="margin-bottom: 2px">

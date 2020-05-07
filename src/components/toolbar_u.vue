@@ -26,7 +26,7 @@
         </el-menu>
         <el-dialog class="monitorDialog"
             title="监控命令的参数设置"
-            :visible="monitorDialogVisible"
+            :visible.sync="monitorDialogVisible"
             width="45%"
             center >
             <el-col :span="12">
@@ -118,7 +118,7 @@
         </el-dialog>
         <el-dialog class="monitorDialog"
             title="测评命令的参数设置"
-            :visible="testDialogVisible"
+            :visible.sync="testDialogVisible"
             width="45%"
             center >
             <el-col :span="12">
@@ -204,8 +204,8 @@
                 <el-button type="primary" @click="testDialogCancel()">确 定</el-button>
             </span>
         </el-dialog>
-         <el-dialog class ="channelDialog" title="设置信道号"
-            :visible="channelDialogVisible"
+        <el-dialog class ="channelDialog" title="设置信道号"
+            :visible.sync="channelDialogVisible"
             width="35%"
             center >
             <el-row style="margin-bottom: 2px">
@@ -223,6 +223,21 @@
                 <el-button type="primary" @click="channelDialogSubmit()">确 定</el-button>
             </span>
         </el-dialog>
+        <el-dialog class = "" title="导入配置文件"
+        :visible.sync="uploadDialogVisible"
+        width="35%"
+        center>
+            <el-upload action="/"
+                    ref="upload"
+                    accept=".txt"			                      
+                    :before-upload="beforeUpload"
+                    style="text-align: center; "		                         
+                    >
+            <el-button style="" type="primary" >导入配置文件</el-button>
+            </el-upload>
+        </el-dialog>
+        <!-- <el-input type="file" id="upfile" @change="uploadFile()" hidden></el-input> -->
+        <!-- <input type="file" id="upfile" @onchange="uploadFile()" hidden> -->
     </div>
 </template>
 
@@ -234,6 +249,9 @@ export default {
     },
     data(){
         return{
+            textData:'',
+            fileList:[],
+            uploadDialogVisible:false,
             channelDialogVisible:false,
             monitorDialogVisible:false,
             testDialogVisible:false,
@@ -346,7 +364,54 @@ export default {
            }, 
         }
     },
+    beforeCreate() {
+			// 读取文件
+			FileReader.prototype.reading = function ({encode} = pms) {
+				let bytes = new Uint8Array(this.result);    //无符号整型数组
+				let text = new TextDecoder(encode || 'UTF-8').decode(bytes);
+				return text;
+			};
+			/* 重写readAsBinaryString函数 */
+			FileReader.prototype.readAsBinaryString = function (f) {
+				if (!this.onload)       //如果this未重写onload函数，则创建一个公共处理方式
+					this.onload = e => {  //在this.onload函数中，完成公共处理
+						let rs = this.reading();
+						console.log(rs);
+					};
+				this.readAsArrayBuffer(f);  //内部会回调this.onload方法
+			};
+    },
     methods:{
+        beforeUpload(file){
+            this.fileList = [file]
+            //console.log('选择了文件beforeUpload')
+            // 读取数据
+            this.read(file);
+            return false
+        },
+        read(f) {
+                let rd = new FileReader();
+                rd.onload = e => {  
+                //this.readAsArrayBuffer函数内，会回调this.onload函数。在这里处理结果
+                try {
+                    let text = JSON.parse(rd.reading({encode: 'UTF-8'}))
+                    console.log(text);
+                    this.uploadDialogVisible = false;
+                     this.$message({
+                        message: '导入成功',
+                        type: 'success'
+                    });
+                }
+                catch(err) {
+                    this.uploadDialogVisible = false;
+                     this.$message({
+                        message: '导入失败，请检查文件内容是否正确',
+                        type: 'error'
+                    });
+                }
+                };
+                rd.readAsBinaryString(f);
+        },
         channelDialogCancel(){
             console.log(this.device_1_channel)
             this.channelDialogVisible = false
@@ -378,6 +443,8 @@ export default {
                 case '1_1':
                     break
                 case '1_2':
+                    console.log("上传")
+                    this.uploadDialogVisible = true;
                     break
                 case '1_3':
                     break
