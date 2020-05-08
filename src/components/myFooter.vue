@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <div class="tip-left" >
-          <span class="text">{{r}}</span>
+          <span class="text">{{isConnected}}</span>
         </div>
         <div>
           <span class="text">{{l}}</span>
@@ -9,13 +9,11 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+//import {mapState} from 'vuex'
 export default {
     name:'MyFooter',
     props: {
-        r:{
-            type:String,
-            required:true
-        },
         l:{
             type:String,
             required:true
@@ -26,11 +24,27 @@ export default {
     },
     data(){
         return{
-            
+            isConnected:'连接失败',
+            isReady:'',
         }
     },
     methods:{
 
+    },
+    computed:{
+      //...mapState(['isconnected']),   可以直接使用
+      ...mapGetters([
+        'isconnected'
+      ])
+    },
+    watch: {
+      isconnected: function(val) { //li就是改变后的wifiList值
+        if(val == 0){
+          this.isConnected = '连接失败'
+        }else{
+          this.isConnected = '连接成功'
+        }
+      }
     }
 }
 </script>

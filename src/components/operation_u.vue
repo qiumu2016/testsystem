@@ -22,11 +22,11 @@
                     <div class="k-start-fleg">k</div>
                     <span class="null-num-fleg">
                         <div class="null-1-fleg"  v-if="true">1</div>
-                        <div class="null-1-fleg"  v-else>①</div>
+                        <div class="null-1-fleg"  v-else>1</div>
                         <div class="null-2-fleg"  v-if="true">2</div>
-                        <div class="null-2-fleg"  v-else>②</div>
+                        <div class="null-2-fleg"  v-else>2</div>
                     </span>
-                    <div class="wk-fleg">x</div>
+                    <div class="wk-fleg">wk</div>
                 </span>
         </el-row>
         <el-row>
@@ -36,6 +36,8 @@
     </el-card>
 </template>
 <script>
+import { Message } from 'element-ui'
+import operation from '../api/operation'
 export default {
     name:'Lower_u',
     components:{
@@ -47,7 +49,7 @@ export default {
           startMode:'',
           filePath:'',
           low_text:'',
-          ip:'255.255.255.255',
+          ip:'',
           disableSave:true,
           options:[
             {value:1,label:'多路自环'},
@@ -68,11 +70,29 @@ export default {
         }
     },
     methods:{
-        IPChange(){
+        IPChange(val){
+            var re =  /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/;
+            if(!re.test(val)){
+                console.log(val)
+                Message.error('ip地址格式不正确，请修改');
+                this.ip = "";
+            }else{
+                this.global.deviceIP = this.ip
+                let data = {
+                    deviceIP:this.ip
+                }
+                operation.changeIP(data).then(res =>{
+                        console.log(res)
+                    }).catch(err =>{
 
+                    })
+            }
         },
         SaveFile(){
-
+            // console.log(this.global.servicePort)
+            // this.global.servicePort++
+            // console.log(this.global.servicePort)
+            
         },
         OnBtnStart(){
             this.startStatus = !this.startStatus
@@ -133,7 +153,7 @@ export default {
   text-align: center;
   position: relative;
   padding: 5px 0;
-  background-color: #67c23a;
+  background-color: #ff0000;
   display: inline-block;
   margin-left: 40px;
 }
@@ -157,7 +177,7 @@ export default {
 }
 .save{
     position: absolute;
-    left: 46%;
+    right: 30%;
 }
 
 </style>

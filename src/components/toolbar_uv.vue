@@ -322,6 +322,8 @@
 </template>
 
 <script>
+import toolbar from '../api/toolbar'
+import { Collapse } from 'element-ui'
 export default {
     name:'menu_uv',
     components:{
@@ -525,6 +527,12 @@ export default {
                 case '1_3':
                     break
                 case '1_4':
+                    console.log(123)
+                    toolbar.showstate().then(res =>{
+                        console.log(res)
+                    }).catch(err =>{
+
+                    })
                     break
                 case '1_5':
                     break

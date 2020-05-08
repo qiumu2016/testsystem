@@ -2,11 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './utils/router'
 import store from './utils/store'
+import global from './utils/global'
 import './theme/element'
-import axios from 'axios'
 
 Vue.config.productionTip = false
-
+Vue.prototype.global = global
 
 
 new Vue({

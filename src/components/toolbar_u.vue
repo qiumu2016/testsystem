@@ -50,16 +50,16 @@
                     </el-row>
                     <el-row>
                         <span class="text">种类&nbsp;</span>
-                        <el-select v-model="monitorDevice_1.groupType" class="in_put_2" size="small">
+                        <el-select v-model="monitorDevice_1.workClass" class="in_put_2" size="small">
                             <el-option
-                            v-for="item in workType"
+                            v-for="item in workClass"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
                             </el-option>
                         </el-select>
                         <span class="text">组号&nbsp;</span>
-                        <el-select v-model="monitorDevice_1.groupNumber" class="in_put_2" size="small">
+                        <el-select v-model="monitorDevice_1.workNumber" class="in_put_2" size="small">
                             <el-option
                             v-for="item in workNumber"
                             :key="item.value"
@@ -91,16 +91,16 @@
                     </el-row>
                     <el-row>
                         <span class="text">种类</span>
-                        <el-select v-model="monitorDevice_2.groupType" class="in_put_2" size="small">
+                        <el-select v-model="monitorDevice_2.workClass" class="in_put_2" size="small">
                             <el-option
-                            v-for="item in workType"
+                            v-for="item in workClass"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
                             </el-option>
                         </el-select>
                         <span class="text">组号</span>
-                        <el-select v-model="monitorDevice_2.groupNumber" class="in_put_2" size="small">
+                        <el-select v-model="monitorDevice_2.workNumber" class="in_put_2" size="small">
                             <el-option
                             v-for="item in workNumber"
                             :key="item.value"
@@ -113,7 +113,7 @@
             </el-col>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="monitorDialogCancel()">取 消</el-button>
-                <el-button type="primary" @click="monitorDialogCancel()">确 定</el-button>
+                <el-button type="primary" @click="monitorDialogSubmit()">确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog class="monitorDialog"
@@ -128,9 +128,9 @@
                     </div>
                     <el-row style="margin-bottom: 10px">
                         <span class="text2">IK模式 &nbsp;</span>
-                        <el-select v-model="testDevice_1.IKMode" class="in_put_1" size="small">
+                        <el-select v-model="testDevice_1.IKmode" class="in_put_1" size="small">
                             <el-option
-                            v-for="item in IKMode"
+                            v-for="item in IKmode"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
@@ -139,14 +139,14 @@
                     </el-row>
                     <el-row style="margin-bottom: 10px">
                         <span class="text2">IK参数  &nbsp;</span>
-                        <el-input v-model="testDevice_1.IKPara" class="in_put_1" size="small">
+                        <el-input v-model="testDevice_1.IKparam" class="in_put_1" size="small">
                         </el-input>
                     </el-row>
                    <el-row style="margin-bottom: 10px">
                         <span class="text">WK模式 &nbsp;</span>
-                        <el-select v-model="testDevice_1.WKMode" class="in_put_1" size="small">
+                        <el-select v-model="testDevice_1.WKmode" class="in_put_1" size="small">
                             <el-option
-                            v-for="item in WKMode"
+                            v-for="item in WKmode"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
@@ -155,7 +155,7 @@
                     </el-row>
                     <el-row style="margin-bottom: 10px">
                         <span class="text">WK参数  &nbsp;</span>
-                        <el-input type="textarea" :rows=3 v-model="testDevice_1.WKPara" class="in_put_1" size="small">
+                        <el-input type="textarea" :rows=3 v-model="testDevice_1.WKparam" class="in_put_1" size="small">
                         </el-input>
                     </el-row>
                 </el-card>
@@ -167,9 +167,9 @@
                     </div>
                     <el-row style="margin-bottom: 10px">
                         <span class="text2">IK模式 &nbsp;</span>
-                        <el-select v-model="testDevice_2.IKMode" class="in_put_1" size="small">
+                        <el-select v-model="testDevice_2.IKmode" class="in_put_1" size="small">
                             <el-option
-                            v-for="item in IKMode"
+                            v-for="item in IKmode"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
@@ -178,14 +178,14 @@
                     </el-row>
                     <el-row style="margin-bottom: 10px">
                         <span class="text2">IK参数 &nbsp;</span>
-                        <el-input v-model="testDevice_2.IKPara" class="in_put_1" size="small">
+                        <el-input v-model="testDevice_2.IKparam" class="in_put_1" size="small">
                         </el-input>
                     </el-row>
                    <el-row style="margin-bottom: 10px">
                         <span class="text">WK模式 &nbsp;</span>
-                        <el-select v-model="testDevice_2.WKMode" class="in_put_1" size="small">
+                        <el-select v-model="testDevice_2.WKmode" class="in_put_1" size="small">
                             <el-option
-                            v-for="item in WKMode"
+                            v-for="item in WKmode"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
@@ -194,14 +194,14 @@
                     </el-row>
                     <el-row style="margin-bottom: 10px">
                         <span class="text"> WK参数 &nbsp;</span>
-                        <el-input type="textarea" :rows=3 v-model="testDevice_2.WKPara" class="in_put_1" size="small">
+                        <el-input type="textarea" :rows=3 v-model="testDevice_2.WKparam" class="in_put_1" size="small">
                         </el-input>
                     </el-row>
                 </el-card>
             </el-col>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="testDialogCancel()">取 消</el-button>
-                <el-button type="primary" @click="testDialogCancel()">确 定</el-button>
+                <el-button type="primary" @click="testDialogSubmit()">确 定</el-button>
             </span>
         </el-dialog>
         <el-dialog class ="channelDialog" title="设置信道号"
@@ -242,6 +242,9 @@
 </template>
 
 <script>
+import toolbar from '../api/toolbar'
+import { Message } from 'element-ui'
+import { mapMutations } from 'vuex'
 export default {
     name:'menu_u',
     components:{
@@ -261,59 +264,59 @@ export default {
             device_1_channel:666,
             device_2_channel:888,
             testDevice_1:{
-                IKMode:'',
-                IKPara:'',
-                WKMode:'',
-                WKPara:'',
+                IKmode:null,
+                IKparam:'',
+                WKmode:null,
+                WKparam:'',
             },
             testDevice_2:{
-                IKMode:'',
-                IKPara:'',
-                WKMode:'',
-                WKPara:'',
+                IKmode:null,
+                IKparam:'',
+                WKmode:null,
+                WKparam:'',
             },
-            IKMode:[
-                {value:'00-Work',label:'00-Work'},
-                {value:'01-Tdm',label:'01-Tdm'},
-                {value:'02-Aloha',label:'02-Aloha'},
-                {value:'03-Kde',label:'03-Kde'},
+            IKmode:[
+                {value:0,label:'00-Work'},
+                {value:1,label:'01-Tdm'},
+                {value:2,label:'02-Aloha'},
+                {value:3,label:'03-Kde'},
             ],
-            WKMode:[
-                {value:'00-Work',label:'00-Work'},
-                {value:'01-Tdm',label:'01-Tdm'},
-                {value:'02-Aloha',label:'02-Aloha'},
-                {value:'03-Kde',label:'03-Kde'},
+            WKmode:[
+                {value:0,label:'00-Work'},
+                {value:1,label:'01-Tdm'},
+                {value:2,label:'02-Aloha'},
+                {value:3,label:'03-Kde'},
             ],
             monitorDevice_1:{
-                workMode:'',
-                groupType:'',
-                groupNumber:'',
+                workMode:null,
+                workClass:null,
+                workNumber:null,
             },
             monitorDevice_2:{
-                workMode:'',
-                groupType:'',
-                groupNumber:'',
+                workMode:null,
+                workClass:null,
+                workNumber:null,
             },
             workMode:[
-                {value:'10-XX2JZ',label:'10-XX2JZ'},
-                {value:'11-XX2JQ',label:'11-XX2JQ'},
-                {value:'12-XX2DD',label:'11-XX2DD'},
-                {value:'13-XX2YJ',label:'11-XX2YJ'},
-                {value:'14-XX2中心站ALOHA解TDM加',label:'14-XX2中心站ALOHA解TDM加'},
-                {value:'15-XX2中心站ALOHA',label:'15-XX2中心站ALOHA'},
-                {value:'16-XX2中心站TDM',label:'14-XX2中心站TDM'},
+                {value:10,label:'10-XX2JZ'},
+                {value:11,label:'11-XX2JQ'},
+                {value:12,label:'11-XX2DD'},
+                {value:13,label:'11-XX2YJ'},
+                {value:14,label:'14-XX2中心站ALOHA解TDM加'},
+                {value:15,label:'15-XX2中心站ALOHA'},
+                {value:16,label:'14-XX2中心站TDM'},
             ],
-            workType:[
-                {value:'01-NET',label:'01-NET'},
-                {value:'06-PTOP',label:'06-PTOP'},
-                {value:'07-GROUPW',label:'07-GROUPW'},
-                {value:'08-YJ',label:'08-YJ'},
+            workClass:[
+                {value:1,label:'01-NET'},
+                {value:6,label:'06-PTOP'},
+                {value:7,label:'07-GROUPW'},
+                {value:8,label:'08-YJ'},
             ],
             workNumber:[
-                {value:'00-xx00',label:'00-xx00'},
-                {value:'01-xx01',label:'01-xx01'},
-                {value:'02-xx02',label:'02-xx02'},
-                {value:'03-xx03',label:'03-xx03'},
+                {value:0,label:'00-xx00'},
+                {value:1,label:'01-xx01'},
+                {value:2,label:'02-xx02'},
+                {value:3,label:'03-xx03'},
             ],
             menu: {
                 option: [
@@ -382,6 +385,7 @@ export default {
 			};
     },
     methods:{
+        ...mapMutations(["connect","disconnect"]),
         beforeUpload(file){
             this.fileList = [file]
             //console.log('选择了文件beforeUpload')
@@ -421,45 +425,165 @@ export default {
             this.channelDialogVisible = false
         },
         monitorDialogCancel(){
-            console.log(this.monitorDevice_1)
             this.monitorDialogVisible = false
         },
         monitorDialogSubmit(){
-            console.log(this.monitorDevice_2)
+            this.global.device1MC = this.monitorDevice_1
+            this.global.device2MC = this.monitorDevice_2
+            let data = {
+                device1MC:this.monitorDevice_1,
+                device2MC:this.monitorDevice_2
+            }
+            toolbar.monitor(data).then(res =>{
+                Message.success("设置成功")
+            }).catch(err=>{
+                Message.error("设置失败")
+            })
             this.monitorDialogVisible = false
         },
         testDialogCancel(){
-            console.log(this.testDevice_1)
             this.testDialogVisible = false
         },
         testDialogSubmit(){
-            console.log(this.testDevice_2)
+            
+            let data = {
+                device1EC:this.testDevice_1,
+                device2EC:this.testDevice_2,
+            }
+            toolbar.evaluate(data).then(res =>{
+
+            }).catch(err =>{
+
+            })
             this.testDialogVisible = false
         },
         handleSelect (value) {
             switch(value){
                 case '1_0':
+                    if(this.global.deviceIP == "")
+                        Message.error("请输入正确的IP地址")
+                    else{
+                        toolbar.connect().then(res =>{
+                            this.connect()
+                            Message.success("连接成功")
+                        }).catch(err =>{
+                            this.disconnect()
+                            Message.error("连接失败")
+                        })
+                    }
                     break
                 case '1_1':
+                    toolbar.disconnect().then(res =>{
+                        this.disconnect()
+                        console.log(res)
+                        Message.success("已断开连接")
+                    })
+                    this.disconnect()
                     break
                 case '1_2':
-                    console.log("上传")
+                    //console.log("上传")
                     this.uploadDialogVisible = true;
                     break
                 case '1_3':
+                    toolbar.outPutFile()
                     break
                 case '1_4':
+                    toolbar.showState().then(res =>{
+                        console.log(res)
+                    }).catch(err =>{
+
+                    })
                     break
                 case '1_5':
+                    toolbar.saveState().then(res =>{
+                        console.log(res)
+                    }).catch(err =>{
+
+                    })
+                    break
+                case '1_6':
                     break
                 case '2':
                     this.monitorDialogVisible = true;
+                    break
+                case '3_0':
+                    toolbar.queryDeviceState().then(res=>{
+
+                    })
+                    break
+                case '3_1':
+                    toolbar.queryWorkMode().then(res =>{
+
+                    })
+                    break
+                case '3_2':
+                    toolbar.setWorkMode().then(res =>{
+
+                    })
+                    break
+                case '3_3':
+                    toolbar.endCall().then(res =>{
+
+                    })
+                    break
+                case '3_4':
+                    toolbar.queryWorkGroupNum().then(res =>{
+
+                    })
+                    break
+                case '3_5':
+                    toolbar.setWorkGroupNum().then(res =>{
+
+                    })
                     break
                 case '4_0':
                     this.channelDialogVisible = true;
                     break
                 case '5':
                     this.testDialogVisible = true;
+                    break
+                case '6_0':
+                    toolbar.device1SetIK().then(res=>{
+
+                    })
+                    break
+                case '6_1':
+                    toolbar.device1SetWK().then(res=>{
+
+                    })
+                    break
+                case '6_2':
+                    toolbar.device1StartEvaluate().then(res=>{
+
+                    })
+                    break
+                case '6_3':
+                    toolbar.device1EndEvaluate().then(res=>{
+
+                    })
+                    break
+                case '6_4':
+                    toolbar.device2SetIK().then(res=>{
+
+                    })
+                    break
+                case '6_5':
+                    toolbar.device2SetWK().then(res=>{
+
+                    })
+                    break
+                case '6_6':
+                     toolbar.device2StartEvaluate().then(res=>{
+
+                    })
+                    break
+                case '6_7':
+                    toolbar.device2EndEvaluate().then(res=>{
+
+                    })
+                    break
+                case '6_8':
+                    
                     break
             }
         }

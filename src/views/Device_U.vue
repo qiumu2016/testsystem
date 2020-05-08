@@ -20,7 +20,7 @@
       </el-row>
     </el-main>
     <el-footer height = "40px">
-      <myfooter :r="r_message" :l="l_message"></myfooter>
+      <myfooter :l="l_message"></myfooter>
     </el-footer>
   </el-container>
 </template>
@@ -54,7 +54,6 @@ export default {
       return{
         url:'',
         m:1,
-        r_message:"连接失败",
         l_message:"就绪",
       }
   },
