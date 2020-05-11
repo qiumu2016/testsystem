@@ -16,19 +16,18 @@
 
 <script>
 // @ is an alias to /src
-
+import { Message } from 'element-ui'
 export default {
   name: 'home',
   components: {
   },
   methods:{
     to_device_u(){
-      sessionStorage.setItem("url",'http://101.11.1.1')
+      sessionStorage.setItem("url",'http://www.xjw.ink')
       this.$router.push('/device_u');
     },
     to_device_uv(){
-      sessionStorage.setItem("url",'http://101.11.1.1')
-      this.$router.push('/device_uv');
+      Message.error("暂不可用！")
     }
   }
 }

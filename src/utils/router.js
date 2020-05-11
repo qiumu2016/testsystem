@@ -17,10 +17,5 @@ export default new Router({
       name: 'u',
       component: () => import('../views/Device_U.vue')
     },
-    {
-      path: '/device_uv',
-      name: 'uv',
-      component: () => import('../views/Device_UV.vue')
-    }
   ]
 })

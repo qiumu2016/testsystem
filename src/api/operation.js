@@ -9,11 +9,19 @@ import http from '../utils/http'
 export default{
     changeIP(params){
         return http.post('/api/config/IP',params)
-    },
- 	test_get(params){
-    	return http.get('/test_get',params)
 	},
-	test_post(params){
-    	return http.post('/test_post',params)
+	upchannel(params){
+		return http.post('/api/config/channel',params)
+	},
+	startTest(){
+		return http.get('/api/command/startTest')
+	},
+	endTest(){
+		return http.get('/api/command/endTest')
+	},
+	test(){
+		return http.get('/test/response')
 	}
+	 
+
 }

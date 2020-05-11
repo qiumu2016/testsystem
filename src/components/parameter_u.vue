@@ -4,15 +4,15 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text">长度:</span>
-                        <el-input type="number" step="0.1" min="0.1" max="8000" @change= "check_length_1A" v-model="A1Form.length" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.1" min="0.1" max="8000" @change= "check_length_1A" v-model="A1Form.length" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">帧数:</span>
-                        <el-input type="number" step="1" min="1" max="2000000000" @change= "check_frame_1A" v-model="A1Form.frameCount" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="1" min="1" max="2000000000" @change= "check_frame_1A" v-model="A1Form.frameCount" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">误码:</span>
-                        <el-input type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_1A" v-model="A1Form.errorRadio" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_1A" v-model="A1Form.errorRadio" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
@@ -22,11 +22,11 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text2">帧间隔:</span>
-                        <el-input v-model="A1Form.frameSpace" class="in_put" size="small"></el-input>
+                        <el-input  :disabled="disableall" v-model="A1Form.frameSpace" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">波特率:</span>
-                        <el-select v-model="A1Form.baudRate" class="in_put" size="small">
+                        <el-select :disabled="disableall" v-model="A1Form.baudRate" class="in_put" size="small">
                             <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -37,11 +37,11 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集点:</span>
-                        <el-input v-model="A1Form.MVStart" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="A1Form.MVStart" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集量:</span>
-                        <el-input v-model="A1Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                        <el-input :disabled="disableall" v-model="A1Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -49,6 +49,7 @@
                     <el-input
                     type="textarea"
                     :rows=8
+                    :disabled="disableall"
                     v-if="body_mode"
                     v-model="A1Form.confirmData">
                     </el-input>
@@ -87,15 +88,15 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text">长度:</span>
-                        <el-input type="number" step="0.1" min="0.1" max="8000" @change= "check_length_1B" v-model="B1Form.length" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.1" min="0.1" max="8000" @change= "check_length_1B" v-model="B1Form.length" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">帧数:</span>
-                        <el-input type="number" step="1" min="1" max="2000000000" @change= "check_frame_1B" v-model="B1Form.frameCount" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="1" min="1" max="2000000000" @change= "check_frame_1B" v-model="B1Form.frameCount" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">误码:</span>
-                        <el-input Atype="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_1B" v-model="B1Form.errorRadio" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_1B" v-model="B1Form.errorRadio" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
@@ -105,11 +106,11 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text2">帧间隔:</span>
-                        <el-input v-model="B1Form.frameSpace" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="B1Form.frameSpace" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">波特率:</span>
-                        <el-select v-model="B1Form.baudRate" class="in_put" size="small">
+                        <el-select :disabled="disableall" v-model="B1Form.baudRate" class="in_put" size="small">
                             <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -120,11 +121,11 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集点:</span>
-                        <el-input v-model="B1Form.MVStart" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="B1Form.MVStart" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集量:</span>
-                        <el-input v-model="B1Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                        <el-input :disabled="disableall" v-model="B1Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -132,6 +133,7 @@
                     <el-input
                     type="textarea"
                     :rows=8
+                    :disabled="disableall"
                     v-if="body_mode"
                     v-model="B1Form.confirmData">
                     </el-input>
@@ -170,15 +172,15 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text">长度:</span>
-                        <el-input type="number" step="0.1" min="0.1" max="8000" @change= "check_length_2A" v-model="A2Form.length" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.1" min="0.1" max="8000" @change= "check_length_2A" v-model="A2Form.length" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">帧数:</span>
-                        <el-input type="number" step="1" min="1" max="2000000000" @change= "check_frame_2A" v-model="A2Form.frameCount" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="1" min="1" max="2000000000" @change= "check_frame_2A" v-model="A2Form.frameCount" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">误码:</span>
-                        <el-input Btype="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_2A" v-model="A2Form.errorRadio" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_2A" v-model="A2Form.errorRadio" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
@@ -188,11 +190,11 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text2">帧间隔:</span>
-                        <el-input v-model="A2Form.frameSpace" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="A2Form.frameSpace" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">波特率:</span>
-                        <el-select v-model="A2Form.baudRate" class="in_put" size="small">
+                        <el-select :disabled="disableall" v-model="A2Form.baudRate" class="in_put" size="small">
                             <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -203,11 +205,11 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集点:</span>
-                        <el-input v-model="A2Form.MVStart" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="A2Form.MVStart" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集量:</span>
-                        <el-input v-model="A2Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                        <el-input :disabled="disableall" v-model="A2Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
@@ -215,6 +217,7 @@
                     <el-input
                     type="textarea"
                     :rows=8
+                    :disabled="disableall"
                     v-if="body_mode"
                     v-model="A2Form.confirmData">
                     </el-input>
@@ -253,15 +256,15 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text">长度:</span>
-                        <el-input type="number" step="0.1" min="0.1" max="8000" @change= "check_length_2B" v-model="B2Form.length" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.1" min="0.1" max="8000" @change= "check_length_2B" v-model="B2Form.length" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">帧数:</span>
-                        <el-input type="number" step="1" min="1" max="2000000000" @change= "check_frame_2B" v-model="B2Form.frameCount" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="1" min="1" max="2000000000" @change= "check_frame_2B" v-model="B2Form.frameCount" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">误码:</span>
-                        <el-input type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_2B" v-model="B2Form.errorRadio" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_2B" v-model="B2Form.errorRadio" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
@@ -271,11 +274,11 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text2">帧间隔:</span>
-                        <el-input v-model="B2Form.frameSpace" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="B2Form.frameSpace" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">波特率:</span>
-                        <el-select v-model="B2Form.baudRate" class="in_put" size="small">
+                        <el-select :disabled="disableall" v-model="B2Form.baudRate" class="in_put" size="small">
                             <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -286,17 +289,18 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集点:</span>
-                        <el-input v-model="B2Form.MVStart" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" v-model="B2Form.MVStart" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集量:</span>
-                        <el-input v-model="B2Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                        <el-input :disabled="disableall" v-model="B2Form.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
                     <span class="text">明文：</span>
                     <el-input
                     type="textarea"
+                    :disabled="disableall"
                     :rows=8
                     v-if="body_mode"
                     v-model="B2Form.confirmData">
@@ -336,15 +340,15 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text">长度:</span>
-                        <el-input type="number" step="0.1" min="0.1" max="8000" @change= "check_length_all" v-model="allForm.length" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.1" min="0.1" max="8000" @change= "check_length_all" v-model="allForm.length" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">帧数:</span>
-                        <el-input type="number" step="1" min="1" max="2000000000" @change= "check_frame_all" v-model="allForm.frameCount" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="1" min="1" max="2000000000" @change= "check_frame_all" v-model="allForm.frameCount" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">误码:</span>
-                        <el-input type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_all" v-model="allForm.errorRadio" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" type="number" step="0.00000001" min="0.00000003" max="0.9999" @change= "check_err_all" v-model="allForm.errorRadio" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text">VOX:</span>
@@ -354,11 +358,11 @@
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="6">
                         <span class="text2">帧间隔:</span>
-                        <el-input @change="check_frameSpace_all" v-model="allForm.frameSpace" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" @change="check_frameSpace_all" v-model="allForm.frameSpace" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">波特率:</span>
-                        <el-select @change="check_baudRate_all" v-model="allForm.baudRate" class="in_put" size="small">
+                        <el-select :disabled="disableall" @change="check_baudRate_all" v-model="allForm.baudRate" class="in_put" size="small">
                             <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -369,17 +373,18 @@
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集点:</span>
-                        <el-input @change="check_MVStart_all" v-model="allForm.MVStart" class="in_put" size="small"></el-input>
+                        <el-input :disabled="disableall" @change="check_MVStart_all" v-model="allForm.MVStart" class="in_put" size="small"></el-input>
                     </el-col>
                     <el-col :span="6">
                         <span class="text2">采集量:</span>
-                        <el-input @change="check_MVcount_all" v-model="allForm.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
+                        <el-input :disabled="disableall" @change="check_MVcount_all" v-model="allForm.MVcount" class="in_put" size="small" placeholder="单位：字节"></el-input>
                     </el-col>
                 </el-row>
                 <el-row style="margin-bottom: 10px">
                     <span class="text">明文：</span>
                     <el-input
                     type="textarea"
+                    :disabled="disableall"
                     @change="check_confirmData_all"
                     :rows=8
                     v-model="allForm.confirmData">
@@ -395,6 +400,9 @@
 </template>
 <script>
 import check from '../utils/check'
+import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
+import parameter from '../api/parameter'
 export default {
     name:'Body_u',
     props: {
@@ -513,9 +521,32 @@ export default {
             disableMIwen:true,
             disableJieMI:true,
             disableMing:false,
+            disableall:false,
         }
     },
+    computed:{
+      //...mapState(['isconnected']),   可以直接使用
+      ...mapGetters([
+        'setChannel',
+        'setChanneled',
+        'flashConfig',
+        'isTesting'
+      ])
+    },
     methods:{
+        ...mapMutations(["connect",
+                         "disconnect",
+                         "set_interface_type",
+                         "set_device1_state",
+                         "et_device2_state",
+                         "set_ismonitorConfig",
+                         "set_isevaluateConfig",
+                         "set_ischannelConfig",
+                         "set_isIP",
+                         "set_setChannel",
+                         "set_setChanneled",
+                         "set_flashConfig",
+                         ]),
         modeChange(a){
            if(a == 1){
                this.body_mode = true;
@@ -632,12 +663,138 @@ export default {
             this.A2Form.confirmData = this.allForm.confirmData
             this.B1Form.confirmData = this.allForm.confirmData
             this.B2Form.confirmData = this.allForm.confirmData
+        },
+        uploadChannel(){
+            this.global.channel1A.length = this.A1Form.length
+            this.global.channel1A.frame = this.A1Form.frameCount
+            this.global.channel1A.frameInterval = this.A1Form.frameSpace
+            this.global.channel1A.errorRate = this.A1Form.errorRadio
+            this.global.channel1A.baudRate = this.A1Form.baudRate
+            this.global.channel1A.startLocation = this.A1Form.MVStart
+            this.global.channel1A.bytes = this.A1Form.MVcount
+            this.global.channel1A.vox = this.A1Form.vox
+            this.global.channel1A.text = this.A1Form.confirmData
+
+            this.global.channel1B.length = this.B1Form.length
+            this.global.channel1B.frame = this.B1Form.frameCount
+            this.global.channel1B.frameInterval = this.B1Form.frameSpace
+            this.global.channel1B.errorRate = this.B1Form.errorRadio
+            this.global.channel1B.baudRate = this.B1Form.baudRate
+            this.global.channel1B.startLocation = this.B1Form.MVStart
+            this.global.channel1B.bytes = this.B1Form.MVcount
+            this.global.channel1B.vox = this.B1Form.vox
+            this.global.channel1B.text = this.B1Form.confirmData
+
+            this.global.channel2A.length = this.A2Form.length
+            this.global.channel2A.frame = this.A2Form.frameCount
+            this.global.channel2A.frameInterval = this.A2Form.frameSpace
+            this.global.channel2A.errorRate = this.A2Form.errorRadio
+            this.global.channel2A.baudRate = this.A2Form.baudRate
+            this.global.channel2A.startLocation = this.A2Form.MVStart
+            this.global.channel2A.bytes = this.A2Form.MVcount
+            this.global.channel2A.vox = this.A2Form.vox
+            this.global.channel2A.text = this.A2Form.confirmData
+
+            this.global.channel2B.length = this.B2Form.length
+            this.global.channel2B.frame = this.B2Form.frameCount
+            this.global.channel2B.frameInterval = this.B2Form.frameSpace
+            this.global.channel2B.errorRate = this.B2Form.errorRadio
+            this.global.channel2B.baudRate = this.B2Form.baudRate
+            this.global.channel2B.startLocation = this.B2Form.MVStart
+            this.global.channel2B.bytes = this.B2Form.MVcount
+            this.global.channel2B.vox = this.B2Form.vox
+            this.global.channel2B.text = this.B2Form.confirmData
+
+            this.global.channelAll.length = this.allForm.length
+            this.global.channelAll.frame = this.allForm.frameCount
+            this.global.channelAll.frameInterval = this.allForm.frameSpace
+            this.global.channelAll.errorRate = this.allForm.errorRadio
+            this.global.channelAll.baudRate = this.allForm.baudRate
+            this.global.channelAll.startLocation = this.allForm.MVStart
+            this.global.channelAll.bytes = this.allForm.MVcount
+            this.global.channelAll.vox = this.allForm.vox
+            this.global.channelAll.text = this.allForm.confirmData
+        },
+        updateChannel(){
+            let config = this.global.getAllConfig()
+            this.A1Form.length = config.channel1A.length
+            this.A1Form.frameCount = config.channel1A.frame
+            this.A1Form.frameSpace = config.channel1A.frameInterval
+            this.A1Form.errorRadio = config.channel1A.errorRate
+            this.A1Form.baudRate = config.channel1A.baudRate
+            this.A1Form.MVStart = config.channel1A.startLocation
+            this.A1Form.MVcount = config.channel1A.bytes
+            this.A1Form.vox = config.channel1A.vox
+            this.A1Form.confirmData = config.channel1A.text
+
+            this.B1Form.length = config.channel1B.length
+            this.B1Form.frameCount = config.channel1B.frame
+            this.B1Form.frameSpace = config.channel1B.frameInterval
+            this.B1Form.errorRadio = config.channel1B.errorRate
+            this.B1Form.baudRate = config.channel1B.baudRate
+            this.B1Form.MVStart =  config.channel1B.startLocation
+            this.B1Form.MVcount = config.channel1B.bytes
+            this.B1Form.vox = config.channel1B.vox
+            this.B1Form.confirmData = config.channel1B.text
+
+            this.A2Form.length = config.channel2A.length
+            this.A2Form.frameCount = config.channel2A.frame
+            this.A2Form.frameSpace = config.channel2A.frameInterval
+            this.A2Form.errorRadio = config.channel2A.errorRate
+            this.A2Form.baudRate = config.channel2A.baudRate
+            this.A2Form.MVStart = config.channel2A.startLocation
+            this.A2Form.MVcount = config.channel2A.bytes
+            this.A2Form.vox = config.channel2A.vox
+            this.A2Form.confirmData = config.channel2A.text
+
+            this.B2Form.length = config.channel2B.length
+            this.B2Form.frameCount = config.channel2B.frame
+            this.B2Form.frameSpace = config.channel2B.frameInterval
+            this.B2Form.errorRadio = config.channel2B.errorRate
+            this.B2Form.baudRate = config.channel2B.baudRate
+            this.B2Form.MVStart = config.channel2B.startLocation
+            this.B2Form.MVcount =  config.channel2B.bytes
+            this.B2Form.vox = config.channel2B.vox
+            this.B2Form.confirmData = config.channel2B.text
+
+            this.allForm.length = config.channelAll.length
+            this.allForm.frameCount = config.channelAll.frame
+            this.allForm.frameSpace = config.channelAll.frameInterval
+            this.allForm.errorRadio = config.channelAll.errorRate
+            this.allForm.baudRate = config.channelAll.baudRate
+            this.allForm.MVStart = config.channelAll.startLocation
+            this.allForm.MVcount = config.channelAll.bytes
+            this.allForm.vox = config.channelAll.vox
+            this.allForm.confirmData = config.channelAll.text
         }
     },
     watch:{ //监听value的变化，进行相应的操作即可
         m: function(a,b){     //a是value的新值，b是旧值
             this.modeChange(a);
-    }
+        },
+        setChannel: function(val) { //li就是改变后的wifiList值
+            if(val){
+                this.uploadChannel()
+                this.set_setChanneled(1)
+            }else{
+                //console.log(this.setChannel)
+            }
+       },
+       flashConfig: function(val){
+           if(val){
+               this.updateChannel()
+               console.log(this.allForm.length)
+               console.log(val)
+               this.set_flashConfig(0)
+           }
+       },
+       isTesting: function(val){
+           if(val == 1){
+               this.disableall = true
+           }else{
+               this.disableall = false
+           }
+       } 
   }
 }
 </script>

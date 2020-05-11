@@ -1,0 +1,49 @@
+this.A1Form.length = this.global.channel1A.length
+this.A1Form.frameCount = this.global.channel1A.frame
+this.A1Form.frameSpace = this.global.channel1A.frameInterval
+this.A1Form.errorRadio = this.global.channel1A.errorRate
+this.A1Form.baudRate = this.global.channel1A.baudRate
+this.A1Form.MVStart = this.global.channel1A.startLocation
+this.A1Form.MVcount = this.global.channel1A.bytes
+this.A1Form.vox = this.global.channel1A.vox
+this.A1Form.confirmData = this.global.channel1A.text
+
+this.B1Form.length = this.global.channel1B.length
+this.B1Form.frameCount = this.global.channel1B.frame
+this.B1Form.frameSpace = this.global.channel1B.frameInterval
+this.B1Form.errorRadio = this.global.channel1B.errorRate
+this.B1Form.baudRate = this.global.channel1B.baudRate
+this.B1Form.MVStart =  this.global.channel1B.startLocation
+this.B1Form.MVcount = this.global.channel1B.bytes
+this.B1Form.vox = this.global.channel1B.vox
+this.B1Form.confirmData = this.global.channel1B.text
+
+this.A2Form.length = this.global.channel2A.length
+this.A2Form.frameCount = this.global.channel2A.frame
+this.A2Form.frameSpace = this.global.channel2A.frameInterval
+this.A2Form.errorRadio = this.global.channel2A.errorRate
+this.A2Form.baudRate = this.global.channel2A.baudRate
+this.A2Form.MVStart = this.global.channel2A.startLocation
+this.A2Form.MVcount = this.global.channel2A.bytes
+this.A2Form.vox = this.global.channel2A.vox
+this.A2Form.confirmData = this.global.channel2A.text
+
+this.B2Form.length = this.global.channel2B.length
+this.B2Form.frameCount = this.global.channel2B.frame
+this.B2Form.frameSpace = this.global.channel2B.frameInterval
+this.B2Form.errorRadio = this.global.channel2B.errorRate
+this.B2Form.baudRate = this.global.channel2B.baudRate
+this.B2Form.MVStart = this.global.channel2B.startLocation
+this.B2Form.MVcount =  this.global.channel2B.bytes
+this.B2Form.vox = this.global.channel2B.vox
+this.B2Form.confirmData = this.global.channel2B.text
+
+this.allForm.length=             this.global.channelAll.length
+this.allForm.frameCount = this.global.channelAll.frame
+this.allForm.frameSpace = this.global.channelAll.frameInterval
+this.allForm.errorRadio = this.global.channelAll.errorRate
+this.allForm.baudRate = this.global.channelAll.baudRate
+this.allForm.MVStart = this.global.channelAll.startLocation
+this.allForm.MVcount = this.global.channelAll.bytes
+this.allForm.vox = this.global.channelAll.vox
+this.allForm.confirmData = this.global.channelAll.text

@@ -20,7 +20,7 @@
       </el-row>
     </el-main>
     <el-footer height = "40px">
-      <myfooter :l="l_message"></myfooter>
+      <myfooter></myfooter>
     </el-footer>
   </el-container>
 </template>
@@ -34,8 +34,6 @@
 </style>
 
 <script>
-// @ is an alias to /src
-import t from '../api/test'
 import menu_u from '../components/toolbar_u.vue'
 import body_u from '../components/parameter_u.vue'
 import right_u from '../components/response_u.vue'
@@ -54,7 +52,6 @@ export default {
       return{
         url:'',
         m:1,
-        l_message:"就绪",
       }
   },
   methods:{
@@ -72,24 +69,6 @@ export default {
       }
 
     },
-    test_api(){
-      t.test_get().then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    test_api_post(){
-      let sent = {
-              type : 'radio',
-              num:123
-            }
-      t.test_post(sent).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
-    }
   }
 }
 </script>

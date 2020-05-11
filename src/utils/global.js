@@ -6,57 +6,57 @@ var deviceIP = ""
  *          channelConfig
  */
 var channel1A = {
-    length:"",        //（通道的长度）
-    frame:"",          //（通道的帧数）
-    frameInterval:"",  //（通道的帧间隔）
-    errorRate:"",       //（通道的误码率）
-    baudRate:"",         //（通道的波特率）
-    startLocation:"",    //（通道的MV采集点）
-    bytes:"",            //（通道的采集字节量）
+    length:null,        //（通道的长度）
+    frame:null,          //（通道的帧数）
+    frameInterval:null,  //（通道的帧间隔）
+    errorRate:null,       //（通道的误码率）
+    baudRate:null,         //（通道的波特率）
+    startLocation:null,    //（通道的MV采集点）
+    bytes:null,            //（通道的采集字节量）
     vox:"",              //（通道的VOX）
     text:"",             //（通道的明文）
  }
  var channel1B = {
-    length:"",        //（通道的长度）
-    frame:"",          //（通道的帧数）
-    frameInterval:"",  //（通道的帧间隔）
-    errorRate:"",       //（通道的误码率）
-    baudRate:"",         //（通道的波特率）
-    startLocation:"",    //（通道的MV采集点）
-    bytes:"",            //（通道的采集字节量）
+    length:null,        //（通道的长度）
+    frame:null,          //（通道的帧数）
+    frameInterval:null,  //（通道的帧间隔）
+    errorRate:null,       //（通道的误码率）
+    baudRate:null,         //（通道的波特率）
+    startLocation:null,    //（通道的MV采集点）
+    bytes:null,            //（通道的采集字节量）
     vox:"",              //（通道的VOX）
     text:"",             //（通道的明文）
  }
  var channel2A = {
-    length:"",        //（通道的长度）
-    frame:"",          //（通道的帧数）
-    frameInterval:"",  //（通道的帧间隔）
-    errorRate:"",       //（通道的误码率）
-    baudRate:"",         //（通道的波特率）
-    startLocation:"",    //（通道的MV采集点）
-    bytes:"",            //（通道的采集字节量）
+    length:null,        //（通道的长度）
+    frame:null,          //（通道的帧数）
+    frameInterval:null,  //（通道的帧间隔）
+    errorRate:null,       //（通道的误码率）
+    baudRate:null,         //（通道的波特率）
+    startLocation:null,    //（通道的MV采集点）
+    bytes:null,            //（通道的采集字节量）
     vox:"",              //（通道的VOX）
     text:"",             //（通道的明文）
  }
  var channel2B = {
-    length:"",        //（通道的长度）
-    frame:"",          //（通道的帧数）
-    frameInterval:"",  //（通道的帧间隔）
-    errorRate:"",       //（通道的误码率）
-    baudRate:"",         //（通道的波特率）
-    startLocation:"",    //（通道的MV采集点）
-    bytes:"",            //（通道的采集字节量）
+    length:null,        //（通道的长度）
+    frame:null,          //（通道的帧数）
+    frameInterval:null,  //（通道的帧间隔）
+    errorRate:null,       //（通道的误码率）
+    baudRate:null,         //（通道的波特率）
+    startLocation:null,    //（通道的MV采集点）
+    bytes:null,            //（通道的采集字节量）
     vox:"",              //（通道的VOX）
     text:"",             //（通道的明文）
  }
  var channelAll = {
-    length:"",        //（通道的长度）
-    frame:"",          //（通道的帧数）
-    frameInterval:"",  //（通道的帧间隔）
-    errorRate:"",       //（通道的误码率）
-    baudRate:"",         //（通道的波特率）
-    startLocation:"",    //（通道的MV采集点）
-    bytes:"",            //（通道的采集字节量）
+    length:null,        //（通道的长度）
+    frame:null,          //（通道的帧数）
+    frameInterval:null,  //（通道的帧间隔）
+    errorRate:null,       //（通道的误码率）
+    baudRate:null,         //（通道的波特率）
+    startLocation:null,    //（通道的MV采集点）
+    bytes:null,            //（通道的采集字节量）
     vox:"",              //（通道的VOX）
     text:"",             //（通道的明文）
  }
@@ -99,7 +99,49 @@ var device2EC = { //evaluateConfig
 }
 
 /**----------------------------------------------------------------------------------**/ 
-
+function parseChannel(channelConfig){
+    let config = {
+        length:parseInt(channelConfig.length),
+        frame:parseInt(channelConfig.frame),
+        frameInterval:parseInt(channelConfig.frameInterval),
+        errorRate:parseFloat(channelConfig.errorRate),
+        baudRate:parseFloat(channelConfig.baudRate),
+        startLocation:parseInt(channelConfig.startLocation),
+        bytes:parseInt(channelConfig.bytes),
+        vox:channelConfig.vox,              //（通道的VOX）
+        text:channelConfig.text          //（通道的明文）
+    }
+    return config
+}
+function configSave(text){
+    deviceIP = text.deviceIP
+    channel1A = parseChannel(text.channel1A)
+    channel1B = parseChannel(text.channel1B)
+    channel2A = parseChannel(text.channel2A)
+    channel2B = parseChannel(text.channel2B)
+    channelAll = parseChannel(text.channelAll)
+    channelMode = text.channelMode
+    device1MC = text.device1MC
+    device2MC = text.device2MC
+    device1EC = text.device1EC
+    device2EC = text.device2EC
+}
+function getAllConfig(){
+   let allConfig = {
+    deviceIP,
+    channel1A,
+    channel1B,
+    channel2A,
+    channel2B,
+    channelAll,
+    channelMode,
+    device1MC,
+    device2MC,
+    device1EC,
+    device2EC,
+   }
+   return allConfig
+}
 export default {
     deviceIP,
     channel1A,
@@ -111,5 +153,7 @@ export default {
     device1MC,
     device2MC,
     device1EC,
-    device2EC
+    device2EC,
+    configSave,
+    getAllConfig
 }

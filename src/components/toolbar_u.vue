@@ -229,15 +229,13 @@
         center>
             <el-upload action="/"
                     ref="upload"
-                    accept=".txt"			                      
+                    accept=".json"			                      
                     :before-upload="beforeUpload"
                     style="text-align: center; "		                         
                     >
             <el-button style="" type="primary" >导入配置文件</el-button>
             </el-upload>
         </el-dialog>
-        <!-- <el-input type="file" id="upfile" @change="uploadFile()" hidden></el-input> -->
-        <!-- <input type="file" id="upfile" @onchange="uploadFile()" hidden> -->
     </div>
 </template>
 
@@ -358,7 +356,6 @@ export default {
                 '设备2设置Wk',
                 '设备2进入测评状态',
                 '设备2退出测评状态',
-                '发送MF数据...'
                 ],
                 help: [
                 '联机帮助...',
@@ -385,11 +382,33 @@ export default {
 			};
     },
     methods:{
-        ...mapMutations(["connect","disconnect"]),
+        ...mapMutations(["connect",
+                         "disconnect",
+                         "set_interface_type",
+                         "set_device1_state",
+                         "et_device2_state",
+                         "set_ismonitorConfig",
+                         "set_isevaluateConfig",
+                         "set_ischannelConfig",
+                         "set_isIP",
+                         "set_flashConfig",
+                         "set_monitor_0",
+                         "set_monitor_1",
+                         "set_monitor_2",
+                         "set_monitor_3",
+                         "set_monitor_4",
+                         "set_monitor_5",
+                         "set_evaluate_0",
+                         "set_evaluate_1",
+                         "set_evaluate_2",
+                         "set_evaluate_3",
+                         "set_evaluate_4",
+                         "set_evaluate_5",
+                         "set_evaluate_6",
+                         "set_evaluate_7",
+                         ]),
         beforeUpload(file){
             this.fileList = [file]
-            //console.log('选择了文件beforeUpload')
-            // 读取数据
             this.read(file);
             return false
         },
@@ -399,19 +418,25 @@ export default {
                 //this.readAsArrayBuffer函数内，会回调this.onload函数。在这里处理结果
                 try {
                     let text = JSON.parse(rd.reading({encode: 'UTF-8'}))
-                    console.log(text);
+                    this.global.configSave(text)
+                    let data = this.global.getAllConfig()
+                    toolbar.upload(data).then(res =>{
+                        console.log(res.data)
+                        if(res.data.code == 0){
+                            this.set_flashConfig(1)
+                            Message.success("导入成功")
+                        }else {
+                             Message.error("导入失败")
+                        }
+                    }).catch( err=>{
+                        
+                    })
                     this.uploadDialogVisible = false;
-                     this.$message({
-                        message: '导入成功',
-                        type: 'success'
-                    });
+                    
                 }
                 catch(err) {
                     this.uploadDialogVisible = false;
-                     this.$message({
-                        message: '导入失败，请检查文件内容是否正确',
-                        type: 'error'
-                    });
+                    Message.error("导入失败，请检查文件内容是否正确")
                 }
                 };
                 rd.readAsBinaryString(f);
@@ -464,18 +489,20 @@ export default {
                         Message.error("请输入正确的IP地址")
                     else{
                         toolbar.connect().then(res =>{
-                            this.connect()
-                            Message.success("连接成功")
-                        }).catch(err =>{
-                            this.disconnect()
-                            Message.error("连接失败")
+                            if (res.data.code == 0){
+                                 this.connect()
+                                 Message.success("连接成功")
+                            }else{
+                                this.disconnect()
+                                Message.error(res.data.message)
+                            }   
+                        }).catch(err =>{  
                         })
                     }
                     break
                 case '1_1':
                     toolbar.disconnect().then(res =>{
                         this.disconnect()
-                        console.log(res)
                         Message.success("已断开连接")
                     })
                     this.disconnect()
@@ -485,7 +512,27 @@ export default {
                     this.uploadDialogVisible = true;
                     break
                 case '1_3':
-                    toolbar.outPutFile()
+                    toolbar.outPutFile().then(res =>{
+                        if (res.status == 200) {
+                            const content = res
+                            const blob = new Blob([JSON.stringify(content.data)])
+                            const fileName = 'config.json'
+                            if ('download' in document.createElement('a')) { // 非IE下载
+                            const elink = document.createElement('a')
+                                elink.download = fileName
+                                elink.style.display = 'none'
+                                elink.href = URL.createObjectURL(blob)
+                                document.body.appendChild(elink)
+                                elink.click()
+                                URL.revokeObjectURL(elink.href) // 释放URL 对象
+                                document.body.removeChild(elink)
+                            } else { // IE10+下载
+                                navigator.msSaveBlob(blob, fileName)
+                            }
+                        }else{
+                            Message.error("导出失败")
+                        }
+                    })
                     break
                 case '1_4':
                     toolbar.showState().then(res =>{
@@ -507,34 +554,22 @@ export default {
                     this.monitorDialogVisible = true;
                     break
                 case '3_0':
-                    toolbar.queryDeviceState().then(res=>{
-
-                    })
+                    this.set_monitor_0(1)
                     break
                 case '3_1':
-                    toolbar.queryWorkMode().then(res =>{
-
-                    })
+                    this.set_monitor_1(1)
                     break
                 case '3_2':
-                    toolbar.setWorkMode().then(res =>{
-
-                    })
+                    this.set_monitor_2(1)
                     break
                 case '3_3':
-                    toolbar.endCall().then(res =>{
-
-                    })
+                    this.set_monitor_3(1)
                     break
                 case '3_4':
-                    toolbar.queryWorkGroupNum().then(res =>{
-
-                    })
+                    this.set_monitor_4(1)
                     break
                 case '3_5':
-                    toolbar.setWorkGroupNum().then(res =>{
-
-                    })
+                    this.set_monitor_5(1)
                     break
                 case '4_0':
                     this.channelDialogVisible = true;
@@ -543,47 +578,28 @@ export default {
                     this.testDialogVisible = true;
                     break
                 case '6_0':
-                    toolbar.device1SetIK().then(res=>{
-
-                    })
+                    this.set_evaluate_0(1)
                     break
                 case '6_1':
-                    toolbar.device1SetWK().then(res=>{
-
-                    })
+                    this.set_evaluate_1(1)
                     break
                 case '6_2':
-                    toolbar.device1StartEvaluate().then(res=>{
-
-                    })
+                    this.set_evaluate_2(1)
                     break
                 case '6_3':
-                    toolbar.device1EndEvaluate().then(res=>{
-
-                    })
+                    this.set_evaluate_3(1)
                     break
                 case '6_4':
-                    toolbar.device2SetIK().then(res=>{
-
-                    })
+                    this.set_evaluate_4(1)
                     break
                 case '6_5':
-                    toolbar.device2SetWK().then(res=>{
-
-                    })
+                    this.set_evaluate_5(1)
                     break
                 case '6_6':
-                     toolbar.device2StartEvaluate().then(res=>{
-
-                    })
+                    this.set_evaluate_6(1)
                     break
                 case '6_7':
-                    toolbar.device2EndEvaluate().then(res=>{
-
-                    })
-                    break
-                case '6_8':
-                    
+                    this.set_evaluate_7(1)
                     break
             }
         }

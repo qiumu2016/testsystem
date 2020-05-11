@@ -1,8 +1,9 @@
 <template>
     <el-card style="margin-top:15px" body-style = "padding: 10px 15px 15px 15px">
         <el-row class = 'start-box'>
-                <el-button @click="OnBtnStart" size="small"    :disabled="startStatus" style="padding-left:10px;float:left;" >启动</el-button>
-                <el-select v-model="startMode" size="small" placeholder="请选择" style="padding-left:10px;float:left;" @change="startModeChange">
+                <el-button @click="OnBtnStart" size="small"  v-show="!testing" style="padding-left:10px;float:left;" >启动</el-button>
+                <el-button @click="OnStpStart" type="info" size="small"  v-show="testing" style="padding-left:10px;float:left;" >结束</el-button>
+                <el-select v-model="startMode"  :disabled="testing"  size="small" placeholder="请选择" style="padding-left:10px;float:left;" @change="startModeChange">
                     <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -18,13 +19,17 @@
                     <el-input class="input-box" size="small" @change="IPChange" v-model="ip"></el-input>
                 </div>
                 <span class = "signal">
-                    <div class="M-start-fleg">M</div>
-                    <div class="k-start-fleg">k</div>
+                    <div class="M-start-fleg" v-show="connected == 0">M</div>
+                    <div class="M-start-fleg-up" v-show="connected == 1">M</div>
+                    <div class="M-start-fleg-down" v-show="connected == 2">M</div>
+                    <div class="k-start-fleg">{{deviceType}}</div>
                     <span class="null-num-fleg">
-                        <div class="null-1-fleg"  v-if="true">1</div>
-                        <div class="null-1-fleg"  v-else>1</div>
-                        <div class="null-2-fleg"  v-if="true">2</div>
-                        <div class="null-2-fleg"  v-else>2</div>
+                        <div class="null-1-fleg-up"  v-show="device1_up == 1">1</div>
+                        <div class="null-1-fleg-down" v-show="device1_up == 2">1</div>
+                        <div class="null-1-fleg" v-show="device1_up == 0">1</div>
+                        <div class="null-2-fleg-up"  v-show="device2_up == 1">2</div>
+                        <div class="null-2-fleg-down"  v-show="device2_up == 2">2</div>
+                        <div class="null-2-fleg"  v-show="device2_up == 0">2</div>
                     </span>
                     <div class="wk-fleg">wk</div>
                 </span>
@@ -38,6 +43,8 @@
 <script>
 import { Message } from 'element-ui'
 import operation from '../api/operation'
+import { mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     name:'Lower_u',
     components:{
@@ -45,12 +52,16 @@ export default {
     },
     data(){
         return{
-          startStatus:false,
-          startMode:'',
+          connected:0,
+          testing:false,
+          startMode:null,
           filePath:'',
           low_text:'',
           ip:'',
           disableSave:true,
+          device1_up:0,
+          device2_up:0,
+          deviceType:'U',
           options:[
             {value:1,label:'多路自环'},
             {value:2,label:'多路双向设备间交叉'},
@@ -69,7 +80,32 @@ export default {
           ],
         }
     },
+    computed:{
+        ...mapGetters(["isIP",
+                        "setChannel",
+                        "isTesting",
+                        "setChanneled",
+                        "isconnected",
+                        "device1_state",
+                        "device2_state",
+                        "interface_type",             
+                        ]),
+    },
     methods:{
+        ...mapMutations(["connect",
+                         "disconnect",
+                         "set_interface_type",
+                         "set_device1_state",
+                         "set_device2_state",
+                         "set_ismonitorConfig",
+                         "set_isevaluateConfig",
+                         "set_ischannelConfig",
+                         "set_isIP",
+                         "set_isTesting",
+                         "set_setChannel",
+                         "set_setChanneled"
+                         ]),
+        
         IPChange(val){
             var re =  /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/;
             if(!re.test(val)){
@@ -82,22 +118,35 @@ export default {
                     deviceIP:this.ip
                 }
                 operation.changeIP(data).then(res =>{
-                        console.log(res)
+                        console.log(res.data)
+                        this.set_isIP(1)
                     }).catch(err =>{
 
                     })
             }
         },
         SaveFile(){
-            // console.log(this.global.servicePort)
-            // this.global.servicePort++
-            // console.log(this.global.servicePort)
-            
+            this.connected = (this.connected + 1) %3
+            this.connected = (this.connected + 1) %3
         },
         OnBtnStart(){
-            this.startStatus = !this.startStatus
+            if(!this.startMode){
+                Message.error('请设置启动模式！')
+            }if(!this.isconnected){
+                Message.error('请连接设备！')
+            }
+            else{
+                //console.log(this.setChannel)
+                this.set_setChannel(1)
+            }
+        },
+        OnStpStart(){
+            operation.endTest().then(res =>{
+                this.set_isTesting(0)
+            })
         },
         startModeChange(value){
+            this.global.channelMode = value
             if(value<=5||value>=10){
                 this.disableSave = true
             }else{
@@ -105,16 +154,80 @@ export default {
             }
             this.$emit('changeMode',value);
         },
+        channel(){
+            let data = {
+                channel1A:this.global.channel1A,
+                channel1B:this.global.channel1B,
+                channel2A:this.global.channel2A,
+                channel2B:this.global.channel2B,
+                channelAll:this.global.channelAll,
+                channelMode:this.global.channelMode
+            }
+            operation.upchannel(data).then(res =>{
+                operation.startTest().then(res =>{
+                    this.set_isTesting(1)
+                })
+                
+            }).catch(err =>{
+
+            })
+        }
+    },
+    watch:{
+        setChanneled: function(val) { //li就是改变后的wifiList值
+            if(val){
+                this.channel()
+                this.set_setChannel(0)
+                this.set_setChanneled(0)
+            }else{
+                //console.log(this.setChannel)
+            }
+       },
+       isTesting: function(val){
+           if(val){
+               this.testing = true
+           }else{
+               this.testing = false
+           }
+       },
+       device1_up: function(val){
+           this.device1 = val
+       },
+       device2_up: function(val){
+           this.device2 = val
+       },
+       interface_type: function(val){
+           this.deviceType = val
+       },
+       isconnected: function(val){
+           this.connected = isconnected
+       }
     }
 }
 </script>
 <style scoped>
-.M-start-fleg {
+.M-start-fleg-up {
   width: 45px;
   text-align: center;
   padding: 9px 0;
   margin-right: 5px;
   background-color: #67c23a;
+  display: inline-block;
+}
+.M-start-fleg-down {
+  width: 45px;
+  text-align: center;
+  padding: 9px 0;
+  margin-right: 5px;
+  background-color: #ff0000;
+  display: inline-block;
+}
+.M-start-fleg {
+  width: 45px;
+  text-align: center;
+  padding: 9px 0;
+  margin-right: 5px;
+  background-color: #7e7e7e;
   display: inline-block;
 }
 .k-start-fleg {
@@ -134,17 +247,43 @@ export default {
   height: 30px;
   background-color: #67c23a;
 }
-.null-1-fleg {
+.null-1-fleg-up {
   width: 100%;
   height: 14px;
   background-color: #67c23a;
   font-size: 10px;
   border-bottom: 1px solid #ffffff;
 }
-.null-2-fleg {
+.null-1-fleg-down {
+  width: 100%;
+  height: 14px;
+  background-color: #ff0000;
+  font-size: 10px;
+  border-bottom: 1px solid #ffffff;
+}
+.null-1-fleg {
+  width: 100%;
+  height: 14px;
+  background-color: #7e7e7e;
+  font-size: 10px;
+  border-bottom: 1px solid #ffffff;
+}
+.null-2-fleg-up {
   width: 100%;
   height: 14px;
   background-color: #67c23a;
+  font-size: 10px;
+}
+.null-2-fleg-down {
+  width: 100%;
+  height: 14px;
+  background-color: #ff0000;
+  font-size: 10px;
+}
+.null-2-fleg {
+  width: 100%;
+  height: 14px;
+  background-color: #7e7e7e;
   font-size: 10px;
 }
 .wk-fleg {

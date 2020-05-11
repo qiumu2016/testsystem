@@ -4,7 +4,7 @@
           <span class="text">{{isConnected}}</span>
         </div>
         <div>
-          <span class="text">{{l}}</span>
+          <span class="text">{{isReady}}</span>
         </div>
     </div>
 </template>
@@ -13,19 +13,13 @@ import {mapGetters} from 'vuex'
 //import {mapState} from 'vuex'
 export default {
     name:'MyFooter',
-    props: {
-        l:{
-            type:String,
-            required:true
-        },
-    },
     components:{
 
     },
     data(){
         return{
             isConnected:'连接失败',
-            isReady:'',
+            isReady:'就绪',
         }
     },
     methods:{
@@ -34,17 +28,27 @@ export default {
     computed:{
       //...mapState(['isconnected']),   可以直接使用
       ...mapGetters([
-        'isconnected'
+        'isconnected',
+        'isTesting',
       ])
     },
     watch: {
       isconnected: function(val) { //li就是改变后的wifiList值
         if(val == 0){
           this.isConnected = '连接失败'
-        }else{
+        }else if(val == 1){
           this.isConnected = '连接成功'
+        }else if(val == 2){
+          this.isConnected = '已断开'
         }
-      }
+      },
+      isTesting: function(val){
+           if(val == 1){
+             this.isReady = '测试中'
+           }else{
+             this.isReady = '就绪'
+           }
+       }
     }
 }
 </script>
