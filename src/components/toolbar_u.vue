@@ -381,6 +381,20 @@ export default {
 				this.readAsArrayBuffer(f);  //内部会回调this.onload方法
 			};
     },
+    mounted(){
+        this.download()
+        toolbar.showState().then(res =>{
+                        if(res.data.code == 0){
+                            Message.success("连接成功")
+                            this.connect()
+                            this.set_startRes(1)
+                        }else{
+                            Message.error(res.data.message)
+                        }
+                    }).catch(err =>{
+
+                    })
+    },
     methods:{
         ...mapMutations(["connect",
                          "disconnect",
@@ -392,6 +406,8 @@ export default {
                          "set_ischannelConfig",
                          "set_isIP",
                          "set_flashConfig",
+                         "set_flashOperation",
+                         "set_flashTimer",
                          "set_monitor_0",
                          "set_monitor_1",
                          "set_monitor_2",
@@ -406,6 +422,7 @@ export default {
                          "set_evaluate_5",
                          "set_evaluate_6",
                          "set_evaluate_7",
+                         "set_startRes"
                          ]),
         beforeUpload(file){
             this.fileList = [file]
@@ -424,6 +441,10 @@ export default {
                         console.log(res.data)
                         if(res.data.code == 0){
                             this.set_flashConfig(1)
+                            this.testDevice_1 = data.device1EC
+                            this.testDevice_2 = data.device2EC
+                            this.monitorDevice_1 = data.device1MC
+                            this.monitorDevice_2 = data.device2MC
                             Message.success("导入成功")
                         }else {
                              Message.error("导入失败")
@@ -482,12 +503,28 @@ export default {
             })
             this.testDialogVisible = false
         },
+        download(){
+            toolbar.outPutFile().then(res =>{
+                        if (res.status == 200) {
+                            const content = res
+                            this.global.configSave(content.data)
+                            this.testDevice_1 = content.data.device1EC
+                            this.testDevice_2 = content.data.device2EC
+                            this.monitorDevice_1 = content.data.device1MC
+                            this.monitorDevice_2 = content.data.device2MC
+                            this.set_flashConfig(1)
+                            this.set_flashOperation(1)
+                        }else{
+                            Message.error("导出失败")
+                        }
+                    })
+        },
         handleSelect (value) {
             switch(value){
                 case '1_0':
-                    if(this.global.deviceIP == "")
-                        Message.error("请输入正确的IP地址")
-                    else{
+                    // if(this.global.deviceIP == "")
+                    //     Message.error("请输入正确的IP地址")
+                    // else{
                         toolbar.connect().then(res =>{
                             if (res.data.code == 0){
                                  this.connect()
@@ -498,12 +535,15 @@ export default {
                             }   
                         }).catch(err =>{  
                         })
-                    }
+                    //}
                     break
                 case '1_1':
                     toolbar.disconnect().then(res =>{
+                        console.log(res)
                         this.disconnect()
                         Message.success("已断开连接")
+                    }).catch(err =>{
+                        console.log(err)
                     })
                     this.disconnect()
                     break

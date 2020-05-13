@@ -1,8 +1,8 @@
 <template>
     <el-card style="margin-top:15px" body-style = "padding: 10px 15px 15px 15px">
         <el-row class = 'start-box'>
-                <el-button @click="OnBtnStart" size="small"  v-show="!testing" style="padding-left:10px;float:left;" >启动</el-button>
-                <el-button @click="OnStpStart" type="info" size="small"  v-show="testing" style="padding-left:10px;float:left;" >结束</el-button>
+                <el-button @click="OnBtnStart" size="small"  style="padding-left:10px;float:left;" >启动</el-button>
+                <el-button @click="OnStpStart" type="info" size="small" style="padding-left:10px;float:left;" >结束</el-button>
                 <el-select v-model="startMode"  :disabled="testing"  size="small" placeholder="请选择" style="padding-left:10px;float:left;" @change="startModeChange">
                     <el-option
                     v-for="item in options"
@@ -12,9 +12,9 @@
                     </el-option>
                 </el-select>
                 <div class = "save">
-                    <span class="text">保存</span>
+                    <!-- <span class="text">保存</span>
                     <el-input size="small" placeholder="输入文件路径" v-model="filePath" class="input-box" :disabled="disableSave"></el-input>
-                    <el-button size="small" @click="SaveFile" style="margin-left:10px;float:left;">...</el-button>
+                    <el-button size="small" @click="SaveFile" style="margin-left:10px;float:left;">...</el-button> -->
                     <span class="text">IP</span>
                     <el-input class="input-box" size="small" @change="IPChange" v-model="ip"></el-input>
                 </div>
@@ -43,8 +43,10 @@
 <script>
 import { Message } from 'element-ui'
 import operation from '../api/operation'
+import toolbar from '../api/toolbar'
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
+
 export default {
     name:'Lower_u',
     components:{
@@ -52,6 +54,8 @@ export default {
     },
     data(){
         return{
+          t:0,
+          Timer:null,
           connected:0,
           testing:false,
           startMode:null,
@@ -88,7 +92,11 @@ export default {
                         "isconnected",
                         "device1_state",
                         "device2_state",
-                        "interface_type",             
+                        "interface_type",  
+                        "messageNumber",
+                        "flashOperation",
+                        "flashTimer",
+                        "startRes"  
                         ]),
     },
     methods:{
@@ -103,7 +111,36 @@ export default {
                          "set_isIP",
                          "set_isTesting",
                          "set_setChannel",
-                         "set_setChanneled"
+                         "set_setChanneled",
+                         "set_messageNumber",
+                         "set_flashConfig",
+                         "set_flashResponse",
+                         "set_flashEnd",
+                         "set_flashOperation",
+                         "set_flashTimer",
+                         "set_startRes",
+
+                         "set_startRes",
+
+                         "set_flashPlain_c1",
+                         "set_flashPlain_c2",
+                         "set_flashPlain_c3",
+                         "set_flashPlain_c4",
+
+                         "set_flashPlain_text_c1",
+                         "set_flashPlain_text_c2",
+                         "set_flashPlain_text_c3",
+                         "set_flashPlain_text_c4",
+
+                         "set_flashMi_c1",
+                         "set_flashMi_c2",
+                         "set_flashMi_c3",
+                         "set_flashMi_c4",
+
+                         "set_flashMi_text_c1",
+                         "set_flashMi_text_c2",
+                         "set_flashMi_text_c3",
+                         "set_flashMi_text_c4",
                          ]),
         
         IPChange(val){
@@ -126,18 +163,56 @@ export default {
             }
         },
         SaveFile(){
-            this.connected = (this.connected + 1) %3
-            this.connected = (this.connected + 1) %3
+           this.get_response()
+            // operation.test().then(res =>{
+            //     console.log(res)
+            // })
+            // if(this.t>0){
+            //     this.clear_timer()
+            // }else{
+            //     this.set_timer()
+            // }
         },
         OnBtnStart(){
             if(!this.startMode){
                 Message.error('请设置启动模式！')
-            }if(!this.isconnected){
+            }else if(!this.isconnected){
                 Message.error('请连接设备！')
             }
+
             else{
-                //console.log(this.setChannel)
-                this.set_setChannel(1)
+                let data = this.global.getAllConfig()
+                let mode = this.startMode
+                data.channelMode = this.startMode
+                if(mode<=5||mode>=10){
+                    this.disableSave = true
+                }else{
+                    this.disableSave = false
+                }
+                this.$emit('changeMode',mode);
+                 console.log(data)
+                    toolbar.upload(data).then(res =>{
+                        console.log(res.data)
+                        if(res.data.code == 0){
+                            this.set_flashConfig(1)
+                            operation.startTest().then(re =>{
+                                if(re.data.code == 0){
+                                    Message.success("启动成功")
+                                    this.set_setChannel(1)
+                                    if(this.startRes == 0)
+                                        this.set_startRes(1)
+                                }else{
+                                    Message.error(re.data.message)
+                                }
+                            })
+                        }else {
+                            Message.error(res.data.message)
+                        }
+                    }).catch( err=>{
+                        
+                    })
+               
+                
             }
         },
         OnStpStart(){
@@ -146,7 +221,17 @@ export default {
             })
         },
         startModeChange(value){
+
             this.global.channelMode = value
+            let data = this.global.getAllConfig()
+            data.channelMode = value
+           // console.log(data)
+            toolbar.upload(data).then(res =>{
+                if(res.data.code){
+                    Message.error(res.data.message)
+                }
+            })
+           // console.log(this.global.channelMode)
             if(value<=5||value>=10){
                 this.disableSave = true
             }else{
@@ -161,7 +246,7 @@ export default {
                 channel2A:this.global.channel2A,
                 channel2B:this.global.channel2B,
                 channelAll:this.global.channelAll,
-                channelMode:this.global.channelMode
+                channelMode:this.startMode
             }
             operation.upchannel(data).then(res =>{
                 operation.startTest().then(res =>{
@@ -171,7 +256,211 @@ export default {
             }).catch(err =>{
 
             })
+        },
+        get_response(){
+            operation.response().then(res =>{
+                //console.log(res)
+                let message = res.data
+                let start =  parseInt(message[0])
+                let end = parseInt(message[1])
+                message.shift()
+                message.shift()
+                if(start == 0){
+                    message.shift()
+                    start++
+                }
+                //console.log(message)
+                if(this.messageNumber < start){
+                    this.resolve(message)
+                }else if(this.messageNumber < end){
+                    let len = this.messageNumber - start + 1
+                    for(let i = 0;i<len;i++)
+                        message.shift()
+                    this.resolve(message)
+                }
+                this.set_messageNumber(end)
+            })
+        },
+        resolve(response){
+            let len = response.length
+            let channel
+            let Plain
+            for(let i = 0;i<len;i++){
+                let str = response[i]
+                let type = this.getType(str)
+                //console.log(type)
+                let arr = str.split(" ")
+                console.log(arr)
+                switch(type){
+                    case 0: //VERSION  无意义报头
+                        break
+                    case 1:  //设备类型
+                        this.set_interface_type(arr[1])
+                        this.deviceType = arr[1]
+                        break
+                    case 2: //设备状态
+                        if(arr[1] == '1'){
+                            if(arr[2] == 'UP') this.set_device1_state(1)
+                            else if(arr[2] == 'DOWN') this.set_device1_state(0)
+                        }else if(arr[1] == '2'){
+                            if(arr[2] == 'UP') this.set_device2_state(1)
+                            else if(arr[2] == 'DOWN') this.set_device2_state(0)
+                        }
+                        break
+                    case 3:         //右侧监控数据
+                        if(arr[1] == '1'){
+                            this.global.response.mon_resp_1 = str
+                            this.set_flashResponse(1)
+                        } else if(arr[1] == '2'){
+                            this.global.response.mon_resp_1 = str
+                            this.set_flashResponse(2)
+                        }
+                        break
+                    case 4:         //多行数据，针对不同通道的密文，需解密
+                        Plain = 0
+                        switch(arr[2]){
+                            case '1A':
+                                channel = 1
+                                this.global.response.crypto_rcvd_1A = str
+                                this.set_flashMi_c1(1)
+                                break
+                            case '1B':
+                                channel = 2
+                                this.global.response.crypto_rcvd_1B = str
+                                this.set_flashMi_c2(1)
+                                break
+                            case '2A':
+                                channel = 3
+                                this.global.response.crypto_rcvd_2A = str
+                                this.set_flashMi_c3(1)
+                                break
+                            case '2B':
+                                channel = 4
+                                this.global.response.crypto_rcvd_2B = str
+                                this.set_flashMi_c4(1)
+                                break
+                        }
+                        break
+                    case 5:         //多行数据，针对不同通道的明文
+                        Plain = 1
+                        switch(arr[2]){
+                            case '1A':
+                                channel = 1
+                                this.global.response.plain_revd_1A = str
+                                this.set_flashPlain_c1(1)
+                                break
+                            case '1B':
+                                channel = 2
+                                this.global.response.plain_revd_1B = str
+                                this.set_flashPlain_c2(1)
+                                break
+                            case '2A':
+                                channel = 3
+                                this.global.response.plain_revd_2A = str
+                                this.set_flashPlain_c3(1)
+                                break
+                            case '2B':
+                                channel = 4
+                                this.global.response.plain_revd_2B = str
+                                this.set_flashPlain_c4(1)
+                                break
+                        }
+                        break
+                    case 6:         //多行数据，FILE文本，无意义
+                        break
+                    case 7:         //底部停止信号
+                        this.global.response.end_of_test = str
+                        this.low_text += (str+'\n')
+                        break
+                    case 8:
+                        if(Plain == 1){
+                            switch(channel){
+                                case 1:
+                                    console.log(str)
+                                    this.global.response.plain_revd_text_1A = str.slice(2)
+                                    this.set_flashPlain_text_c1(1)
+                                    break
+                                case 2:
+                                    this.global.response.plain_revd_text_1B = str.slice(2)
+                                    this.set_flashPlain_text_c2(1)
+                                    break
+                                case 3:
+                                    this.global.response.plain_revd_text_2A = str.slice(2)
+                                    this.set_flashPlain_text_c3(1)
+                                    break
+                                case 4:
+                                    this.global.response.plain_revd_text_2B = str.slice(2)
+                                    this.set_flashPlain_text_c4(1)
+                                    break
+                            }
+                        }else if(Plain == 0){
+                            switch(channel){
+                                case 1:
+                                    this.global.response.crypto_rcvd_text_1A = str.slice(2)
+                                    this.set_flashMi_text_c1(1)
+                                    break
+                                case 2:
+                                    this.global.response.crypto_rcvd_text_1B = str.slice(2)
+                                    this.set_flashMi_text_c2(1)
+                                    break
+                                case 3:
+                                    this.global.response.crypto_rcvd_text_2A = str.slice(2)
+                                    this.set_flashMi_text_c3(1)
+                                    break
+                                case 4:
+                                    this.global.response.crypto_rcvd_text_2B = str.slice(2)
+                                    this.set_flashMi_text_c4(1)
+                                    break
+                            }
+                        }
+                        break
+
+                    
+                }
+                //setTimeout(function(){}, 1000);
+            }
+        },
+        sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms))
+        },
+        getType(str){
+           let arr = str.split(" ")
+           if(str[0] == '-') //多行数据的下一行
+              return 8
+           switch(arr[0]){
+                case 'VERSION':
+                    return 0
+                    break
+                case 'INTERFACE-TYPE':
+                    return 1
+                    break
+                case 'DEVICE-STATE':
+                    return 2
+                    break
+                case 'MON-RESP':
+                    return 3
+                    break
+                case 'DATA':
+                    if(arr[1] == "CRYPTO-RCVD") return 4
+                    if(arr[1] == "PLAIN-RCVD") return 5
+                    if(arr[1] == "FILE") return 6
+                    break
+                case 'END-OF-TEST':
+                    return 7
+                    break
+           }
+        },
+        set_timer(){
+            this.Timer = setInterval( () => {
+               this.get_response()
+　　　　　　}, 3000)
+        },
+        clear_timer(){
+            clearInterval(this.Timer)
         }
+    },
+    distroyed() {
+        clearInterval(this.timer)
     },
     watch:{
         setChanneled: function(val) { //li就是改变后的wifiList值
@@ -190,17 +479,45 @@ export default {
                this.testing = false
            }
        },
-       device1_up: function(val){
-           this.device1 = val
+       device1_state: function(val){
+           this.device1_up = val
        },
-       device2_up: function(val){
-           this.device2 = val
+       device2_state: function(val){
+           this.device2_up = val
        },
        interface_type: function(val){
            this.deviceType = val
        },
        isconnected: function(val){
-           this.connected = isconnected
+           this.connected = val
+       },
+       flashTimer: function(val){
+           if(val == 1){
+               this.clear_timer()
+               //调用一次
+               this.set_timer()
+               this.set_flashTimer(0)
+           }
+       },
+       flashOperation: function(val){
+           if(val == 1){
+               let config = this.global.getAllConfig()
+               this.ip = config.deviceIP
+               this.startMode = config.channelMode
+               if(this.startMode<=5||this.startMode>=10){
+                this.disableSave = true
+                    }else{
+                        this.disableSave = false
+                    }
+                    this.$emit('changeMode',this.startMode);
+                    this.set_flashOperation(0)
+                }
+       },
+       startRes: function(val){
+           if(val == 1){
+               this.set_timer()
+               this.set_startRes(0)
+           }
        }
     }
 }

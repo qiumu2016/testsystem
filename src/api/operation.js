@@ -19,6 +19,9 @@ export default{
 	endTest(){
 		return http.get('/api/command/endTest')
 	},
+	response(){
+		return http.get('/api/response')
+	},
 	test(){
 		return http.get('/test/response')
 	}

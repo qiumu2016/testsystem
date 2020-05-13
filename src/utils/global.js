@@ -97,8 +97,42 @@ var device2EC = { //evaluateConfig
     WKmode:null,      //（数字，WK模式:0-3）,
     WKparam:""          //（字符串，WK参数）
 }
+/**------------------------------------回显数据---------------------------------------**/ 
+var response = {
+    version:'',                 //无用数据
+    mon_resp_1:'',               //右边的response数据
+    mon_resp_2:'',                //右边的response数据
 
-/**----------------------------------------------------------------------------------**/ 
+    plain_revd_1A:'',               //参数部分的明文
+    plain_revd_1B:'',               //参数部分的明文
+    plain_revd_2A:'',               //参数部分的明文
+    plain_revd_2B:'',               //参数部分的明文
+
+    plain_revd_text_1A:'',               //参数部分的明文
+    plain_revd_text_1B:'',               //参数部分的明文
+    plain_revd_text_2A:'',               //参数部分的明文
+    plain_revd_text_2B:'',               //参数部分的明文
+
+    crypto_rcvd_1A:'',              //参数的密文部分
+    crypto_rcvd_1B:'',              //参数的密文部分
+    crypto_rcvd_2A:'',              //参数的密文部分
+    crypto_rcvd_2B:'',              //参数的密文部分
+
+    crypto_rcvd_text_1A:'',              //参数的密文部分
+    crypto_rcvd_text_1B:'',              //参数的密文部分
+    crypto_rcvd_text_2A:'',              //参数的密文部分
+    crypto_rcvd_text_2B:'',              //参数的密文部分
+
+
+    decode_1A:'',              //参数的解密部分
+    decode_1B:'',              //参数的解密部分
+    decode_2A:'',              //参数的解密部分
+    decode_1B:'',              //参数的解密部分
+
+    end_of_test:''                  //最下方输入框
+    
+}
+/**----------------------------------参数处理函数-------------------------------------**/ 
 function parseChannel(channelConfig){
     let config = {
         length:parseInt(channelConfig.length),
@@ -154,6 +188,7 @@ export default {
     device2MC,
     device1EC,
     device2EC,
+    response,
     configSave,
     getAllConfig
 }

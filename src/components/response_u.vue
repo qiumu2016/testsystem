@@ -4,13 +4,13 @@
             <span class = "text">设备1监控命令/响应:</span>
          </el-row>
          <el-row style="margin-bottom: 6px">
-            <el-input type="textarea" :rows="7" v-model="device_1"></el-input>
+            <el-input disabled type="textarea" :rows="7" v-model="device_1"></el-input>
          </el-row>
          <el-row style="margin-bottom: 6px">
              <span class = "text">设备2监控命令/响应:</span>
          </el-row>
          <el-row style="margin-bottom: 2px">
-            <el-input type="textarea" :rows="7" v-model="device_2"></el-input>
+            <el-input disabled type="textarea" :rows="7" v-model="device_2"></el-input>
          </el-row>
     </el-card>
 </template>
@@ -46,6 +46,8 @@ export default {
             'evaluate_5',
             'evaluate_6',
             'evaluate_7',
+            'flashResponse',
+            'flashTimer'
         ])
     },
     methods:{
@@ -64,15 +66,26 @@ export default {
             "set_evaluate_5",
             "set_evaluate_6",
             "set_evaluate_7",
+            "set_flashResponse",
+            "set_flashTimer"
         ])
     },
     watch:{
+        flashResponse: function(val){
+          if(val == 1){
+              this.device_1 += (this.global.response.mon_resp_1 +'\n')
+          }else if(val == 2){
+               this.device_2 += (this.global.response.mon_resp_2 + '\n')
+          }
+          this.set_flashResponse(0)
+        },
         monitor_0: function(val){
             if(val == 1){
                 response.queryDeviceState().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -84,8 +97,9 @@ export default {
             if(val == 1){
                 response.queryWorkMode().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -97,8 +111,9 @@ export default {
             if(val == 1){
                 response.setWorkMode().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -110,8 +125,9 @@ export default {
             if(val == 1){
                 response.endCall().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -123,8 +139,9 @@ export default {
             if(val == 1){
                 response.queryWorkGroupNum().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -136,8 +153,9 @@ export default {
             if(val == 1){
                 response.setWorkGroupNum().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -149,8 +167,9 @@ export default {
             if(val == 1){
                 response.device1SetIK().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -162,8 +181,9 @@ export default {
              if(val == 1){
                 response.device1SetWK().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -175,8 +195,9 @@ export default {
              if(val == 1){
                 response.device1StartEvaluate().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -188,8 +209,9 @@ export default {
              if(val == 1){
                 response.device1EndEvaluate().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -201,8 +223,9 @@ export default {
              if(val == 1){
                 response.device2SetIK().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -214,8 +237,9 @@ export default {
              if(val == 1){
                 response.device2SetWK().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -227,8 +251,9 @@ export default {
              if(val == 1){
                 response.device2StartEvaluate().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }
@@ -240,8 +265,9 @@ export default {
              if(val == 1){
                 response.device2EndEvaluate().then(res =>{
                     if(res.data.code == 0){
-                        device_1 += res.data.device1
-                        device_2 += res.data.device2
+                        this.device_1 += res.data.device1
+                        this.device_2 += res.data.device2
+                        this.set_flashTimer(1)
                     }else{
                         Message.error(res.data.message)
                     }

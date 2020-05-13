@@ -460,7 +460,7 @@ export default {
                 baudRate:null,
                 MVStart:null,
                 MVcount:null,
-                confirmData:null,
+                confirmData:'',
                 MIwen:'',
                 decode_MIwen:''
             },
@@ -473,7 +473,7 @@ export default {
                 baudRate:null,
                 MVStart:null,
                 MVcount:null,
-                confirmData:null,
+                confirmData:'',
                 MIwen:'',
                 decode_MIwen:''
             },
@@ -486,7 +486,7 @@ export default {
                 baudRate:null,
                 MVStart:null,
                 MVcount:null,
-                confirmData:null,
+                confirmData:'',
                 MIwen:'',
                 decode_MIwen:''
             },
@@ -499,7 +499,7 @@ export default {
                 baudRate:null,
                 MVStart:null,
                 MVcount:null,
-                confirmData:null,
+                confirmData:'',
                 MIwen:'',
                 decode_MIwen:''
             },
@@ -512,7 +512,7 @@ export default {
                 baudRate:null,
                 MVStart:null,
                 MVcount:null,
-                confirmData:null,
+                confirmData:'',
             },
             wiki:{
                 text:'',
@@ -530,7 +530,27 @@ export default {
         'setChannel',
         'setChanneled',
         'flashConfig',
-        'isTesting'
+        'isTesting',
+
+        'flashPlain_c1',
+        'flashPlain_c2',
+        'flashPlain_c3',
+        'flashPlain_c4',
+
+        'flashPlain_text_c1',
+        'flashPlain_text_c2',
+        'flashPlain_text_c3',
+        'flashPlain_text_c4',
+
+        'flashMi_c1',
+        'flashMi_c2',
+        'flashMi_c3',
+        'flashMi_c4',
+
+        'flashMi_text_c1',
+        'flashMi_text_c2',
+        'flashMi_text_c3',
+        'flashMi_text_c4',
       ])
     },
     methods:{
@@ -546,6 +566,27 @@ export default {
                          "set_setChannel",
                          "set_setChanneled",
                          "set_flashConfig",
+
+                         "set_flashPlain_c1",
+                         "set_flashPlain_c2",
+                         "set_flashPlain_c3",
+                         "set_flashPlain_c4",
+
+                         "set_flashPlain_text_c1",
+                         "set_flashPlain_text_c2",
+                         "set_flashPlain_text_c3",
+                         "set_flashPlain_text_c4",
+
+                         "set_flashMi_c1",
+                         "set_flashMi_c2",
+                         "set_flashMi_c3",
+                         "set_flashMi_c4",
+
+                         "set_flashMi_text_c1",
+                         "set_flashMi_text_c2",
+                         "set_flashMi_text_c3",
+                         "set_flashMi_text_c4",
+                         "set_flashMi_text"
                          ]),
         modeChange(a){
            if(a == 1){
@@ -717,6 +758,17 @@ export default {
         },
         updateChannel(){
             let config = this.global.getAllConfig()
+
+            this.allForm.length = config.channelAll.length
+            this.allForm.frameCount = config.channelAll.frame
+            this.allForm.frameSpace = config.channelAll.frameInterval
+            this.allForm.errorRadio = config.channelAll.errorRate
+            this.allForm.baudRate = config.channelAll.baudRate
+            this.allForm.MVStart = config.channelAll.startLocation
+            this.allForm.MVcount = config.channelAll.bytes
+            this.allForm.vox = config.channelAll.vox
+            this.allForm.confirmData = config.channelAll.text
+
             this.A1Form.length = config.channel1A.length
             this.A1Form.frameCount = config.channel1A.frame
             this.A1Form.frameSpace = config.channel1A.frameInterval
@@ -757,15 +809,15 @@ export default {
             this.B2Form.vox = config.channel2B.vox
             this.B2Form.confirmData = config.channel2B.text
 
-            this.allForm.length = config.channelAll.length
-            this.allForm.frameCount = config.channelAll.frame
-            this.allForm.frameSpace = config.channelAll.frameInterval
-            this.allForm.errorRadio = config.channelAll.errorRate
-            this.allForm.baudRate = config.channelAll.baudRate
-            this.allForm.MVStart = config.channelAll.startLocation
-            this.allForm.MVcount = config.channelAll.bytes
-            this.allForm.vox = config.channelAll.vox
-            this.allForm.confirmData = config.channelAll.text
+            
+        },
+        decode(str){
+            let arr = str.split(" ")
+            let result = ''
+            for(let i  = 0;i<arr.length;i++){
+                result +=  ((parseInt(arr[i],16)+1).toString(16) +' ')
+            }
+            return result.toUpperCase()
         }
     },
     watch:{ //监听value的变化，进行相应的操作即可
@@ -783,8 +835,6 @@ export default {
        flashConfig: function(val){
            if(val){
                this.updateChannel()
-               console.log(this.allForm.length)
-               console.log(val)
                this.set_flashConfig(0)
            }
        },
@@ -794,7 +844,94 @@ export default {
            }else{
                this.disableall = false
            }
-       } 
+       },
+       flashPlain_c1: function(val){
+           if(val == 0) return 
+           this.A1Form.confirmData += (this.global.response.plain_revd_1A +'\n')
+           this.set_flashPlain_c1(0)
+       },
+       flashPlain_c2: function(val){
+           if(val == 0) return 
+           this.B1Form.confirmData += (this.global.response.plain_revd_1B +'\n')
+           this.set_flashPlain_c2(0)
+       },
+       flashPlain_c3: function(val){
+           if(val == 0) return 
+           this.A2Form.confirmData += (this.global.response.plain_revd_2A +'\n')
+           this.set_flashPlain_c3(0)
+       },
+       flashPlain_c4: function(val){
+           if(val == 0) return 
+           this.B2Form.confirmData += (this.global.response.plain_revd_2B +'\n')
+           this.set_flashPlain_c4(0)
+       },
+
+       flashPlain_text_c1: function(val){
+           if(val == 0) return 
+           this.A1Form.confirmData += (this.global.response.plain_revd_text_1A +'\n')
+           this.set_flashPlain_text_c1(0)
+       },
+       flashPlain_text_c2: function(val){
+           if(val == 0) return 
+           this.B1Form.confirmData += (this.global.response.plain_revd_text_1B +'\n')
+           this.set_flashPlain_text_c2(0)
+       },
+       flashPlain_text_c3: function(val){
+           if(val == 0) return 
+           this.A2Form.confirmData += (this.global.response.plain_revd_text_2A +'\n')
+           this.set_flashPlain_text_c3(0)
+       },
+       flashPlain_text_c4: function(val){
+           if(val == 0) return 
+           this.B2Form.confirmData += (this.global.response.plain_revd_text_2B +'\n')
+           this.set_flashPlain_text_c4(0)
+       },
+
+       flashMi_c1: function(val){
+           if(val == 0) return 
+           this.A1Form.MIwen += (this.global.response.crypto_rcvd_1A +'\n')
+           this.set_flashMi_c1(0)
+       },
+       flashMi_c2: function(val){
+           if(val == 0) return 
+           this.B1Form.MIwen += (this.global.response.crypto_rcvd_1B +'\n')
+           this.set_flashMi_c2(0)
+       },
+       flashMi_c3: function(val){
+           if(val == 0) return 
+           this.A2Form.MIwen += (this.global.response.crypto_rcvd_2A +'\n')
+           this.set_flashMi_c3(0)
+       },
+       flashMi_c4: function(val){
+           if(val == 0) return 
+           this.B2Form.MIwen += (this.global.response.crypto_rcvd_2B +'\n')
+           this.set_flashMi_c4(0)
+       },
+
+       flashMi_text_c1: function(val){
+           if(val == 0) return 
+           this.A1Form.MIwen += (this.global.response.crypto_rcvd_text_1A +'\n')
+           this.A1Form.decode_MIwen += (this.decode(this.global.response.crypto_rcvd_text_1A)+'\n')
+           this.set_flashMi_text_c1(0)
+       },
+       flashMi_text_c2: function(val){
+           if(val == 0) return 
+           this.B1Form.MIwen += (this.global.response.crypto_rcvd_text_1B +'\n')
+           this.B1Form.decode_MIwen += (this.decode(this.global.response.crypto_rcvd_text_1B)+'\n')
+           this.set_flashMi_text_c2(0)
+       },
+       flashMi_text_c3: function(val){
+           if(val == 0) return 
+            this.A2Form.MIwen += (this.global.response.crypto_rcvd_text_2A +'\n')
+           this.A2Form.decode_MIwen += (this.decode(this.global.response.crypto_rcvd_text_2A)+'\n')
+           this.set_flashMi_text_c3(0)
+       },
+       flashMi_text_c4: function(val){
+           if(val == 0) return 
+           this.B2Form.MIwen += (this.global.response.crypto_rcvd_text_2B +'\n')
+           this.B2Form.decode_MIwen += (this.decode(this.global.response.crypto_rcvd_text_2B)+'\n')
+           this.set_flashMi_text_c4(0)
+       },
   }
 }
 </script>

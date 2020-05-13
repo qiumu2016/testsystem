@@ -13,11 +13,40 @@ export default new Vuex.Store({
     isevaluateConfig:0,
     ischannelConfig:0,
     isIP:0,
+    messageNumber:0,
 
     isTesting:0,
     setChannel:0,
     setChanneled:0,
     flashConfig:0,
+    flashOperation:0,
+    flashResponse:0,
+    flashEnd:0,
+    startRes:0,
+
+
+    flashPlain_c1:0,
+    flashPlain_c2:0,
+    flashPlain_c3:0,
+    flashPlain_c4:0,
+
+    flashPlain_text_c1:0,
+    flashPlain_text_c2:0,
+    flashPlain_text_c3:0,
+    flashPlain_text_c4:0,
+
+    flashMi_c1:0,
+    flashMi_c2:0,
+    flashMi_c3:0,
+    flashMi_c4:0,
+
+    flashMi_text_c1:0,
+    flashMi_text_c2:0,
+    flashMi_text_c3:0,
+    flashMi_text_c4:0,
+
+    flashDecode:0,
+    flashTimer:0,
 
     monitor_0:0,
     monitor_1:0,
@@ -45,11 +74,43 @@ export default new Vuex.Store({
     ismonitorConfig : state => state.ismonitorConfig,
     isevaluateConfig : state => state.isevaluateConfig,
     ischannelConfig : state => state.ischannelConfig,
+
+
     isIP : state => state.isIP,
     isTesting : state => state.isTesting,
     setChannel : state => state.setChannel,
     setChanneled : state => state.setChanneled,
     flashConfig : state => state.flashConfig,
+    flashResponse:state => state.flashResponse,
+    flashEnd:state => state.flashEnd,
+    flashOperation:state => state.flashOperation,
+    startRes:state => state.startRes,
+
+    flashPlain_c1:state => state.flashPlain_c1,
+    flashPlain_c2:state => state.flashPlain_c2,
+    flashPlain_c3:state => state.flashPlain_c3,
+    flashPlain_c4:state => state.flashPlain_c4,
+
+    flashMi_c1:state => state.flashMi_c1,
+    flashMi_c2:state => state.flashMi_c2,
+    flashMi_c3:state => state.flashMi_c3,
+    flashMi_c4:state => state.flashMi_c4,
+
+    flashPlain_text_c1:state => state.flashPlain_text_c1,
+    flashPlain_text_c2:state => state.flashPlain_text_c2,
+    flashPlain_text_c3:state => state.flashPlain_text_c3,
+    flashPlain_text_c4:state => state.flashPlain_text_c4,
+
+    flashMi_text_c1:state => state.flashMi_text_c1,
+    flashMi_text_c2:state => state.flashMi_text_c2,
+    flashMi_text_c3:state => state.flashMi_text_c3,
+    flashMi_text_c4:state => state.flashMi_text_c4,
+
+    flashDecode:state => state.flashDecode,
+
+    flashTimer:state => state.flashTimer,
+
+    messageNumber:state =>state.messageNumber,
 
     monitor_0:state => state.monitor_0,
     monitor_1:state => state.monitor_1,
@@ -109,6 +170,81 @@ export default new Vuex.Store({
     set_flashConfig(state,val){
       state.flashConfig = val
     },
+    set_flashResponse(state,val){
+      state.flashResponse = val
+    },
+    set_flashEnd(state,val){
+      state.flashEnd = val
+    },
+    set_startRes(state,val){
+      state.startRes = val
+    },
+
+    set_flashOperation(state,val){
+      state.flashOperation = val
+    },
+
+    set_flashPlain_c1(state,val){
+      state.flashPlain_c1 = val
+    },
+    set_flashPlain_c2(state,val){
+      state.flashPlain_c2 = val
+    },
+    set_flashPlain_c3(state,val){
+      state.flashPlain_c3 = val
+    },
+    set_flashPlain_c4(state,val){
+      state.flashPlain_c4 = val
+    },
+
+    set_flashMi_c1(state,val){
+      state.flashMi_c1 = val
+    },
+    set_flashMi_c2(state,val){
+      state.flashMi_c2 = val
+    },
+    set_flashMi_c3(state,val){
+      state.flashMi_c3 = val
+    },
+    set_flashMi_c4(state,val){
+      state.flashMi_c4 = val
+    },
+
+    set_flashPlain_text_c1(state,val){
+      state.flashPlain_text_c1 = val
+    },
+    set_flashPlain_text_c2(state,val){
+      state.flashPlain_text_c2 = val
+    },
+    set_flashPlain_text_c3(state,val){
+      state.flashPlain_text_c3 = val
+    },
+    set_flashPlain_text_c4(state,val){
+      state.flashPlain_text_c4 = val
+    },
+
+    set_flashMi_text_c1(state,val){
+      state.flashMi_text_c1 = val
+    },
+    set_flashMi_text_c2(state,val){
+      state.flashMi_text_c2 = val
+    },
+    set_flashMi_text_c3(state,val){
+      state.flashMi_text_c3 = val
+    },
+    set_flashMi_text_c4(state,val){
+      state.flashMi_text_c4 = val
+    },
+
+    set_flashDecode(state,val){
+      state.flashDecode = val
+    },
+    set_messageNumber(state,val){  //设置处理过的信息编号
+      state.messageNumber = val
+    },
+    set_flashTimer(state,val){
+      state.flashTimer = val
+    },
     /*********监控*************/
     set_monitor_0(state, val){
       state.monitor_0 = val
@@ -150,7 +286,7 @@ export default new Vuex.Store({
     set_evaluate_6(state, val){
       state.evaluate_6 = val
     },
-    set_evaluate_6(state, val){
+    set_evaluate_7(state, val){
       state.evaluate_7 = val
     },
 
